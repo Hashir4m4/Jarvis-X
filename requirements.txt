@@ -1,0 +1,39 @@
+# ==============================================================================
+# JARVIS X OS — Python Dependencies
+# ==============================================================================
+
+# Core API & Networking
+fastapi>=0.110.0
+uvicorn[standard]>=0.28.0
+websockets>=12.0
+requests>=2.31.0
+psutil>=5.9.8
+
+# Memory & Persistence
+chromadb>=0.4.24
+numpy>=1.26.0
+
+# Windows System Automation (Windows OS only)
+pyautogui>=0.9.54
+pyperclip>=1.8.2
+pycaw>=20240210
+comtypes>=1.4.0
+screen-brightness-control>=0.23.0
+
+# Voice Processing & Synthesis
+pyttsx3>=2.90
+SpeechRecognition>=3.10.1
+pyaudio>=0.2.14
+openwakeword>=0.6.0
+faster-whisper>=1.0.0
+
+# Computer Vision & Perception
+opencv-python>=4.9.0
+ultralytics>=8.1.0
+mediapipe>=0.10.11
+pyzbar>=0.1.9
+paddleocr>=2.7.3
+
+# Optional: GPU acceleration for PaddleOCR (install paddlepaddle for CPU or paddlepaddle-gpu for CUDA)
+# paddlepaddle>=2.6.0
+# paddlepaddle-gpu>=2.6.0

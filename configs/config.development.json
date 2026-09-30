@@ -1,0 +1,13 @@
+{
+  "environment": {
+    "profile": "development",
+    "mode": "hybrid",
+    "debug": true
+  },
+  "logging": {
+    "level": "DEBUG"
+  },
+  "features": {
+    "developer_mode": true
+  }
+}

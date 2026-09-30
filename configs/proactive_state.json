@@ -1,0 +1,234 @@
+{
+  "notification_mode": "DO_NOT_DISTURB",
+  "monitors": {
+    "battery_monitor": {
+      "monitor_id": "battery_monitor",
+      "name": "Battery Monitor",
+      "description": "Monitors laptop battery level and power connection.",
+      "event_types": [
+        "SYSTEM_EVENT"
+      ],
+      "required_capabilities": [
+        "system_info"
+      ],
+      "interval_seconds": 60.0,
+      "enabled": true,
+      "privacy_level": "LOCAL_ONLY",
+      "status": "ERROR",
+      "last_poll_time": 1790784495.3255918,
+      "error_message": "'<' not supported between instances of 'MagicMock' and 'int'"
+    },
+    "disk_monitor": {
+      "monitor_id": "disk_monitor",
+      "name": "Disk Monitor",
+      "description": "Monitors available storage space on system drive.",
+      "event_types": [
+        "SYSTEM_EVENT"
+      ],
+      "required_capabilities": [
+        "file_system"
+      ],
+      "interval_seconds": 120.0,
+      "enabled": true,
+      "privacy_level": "LOCAL_ONLY",
+      "status": "ACTIVE",
+      "last_poll_time": 1790784495.3312964,
+      "error_message": null
+    },
+    "system_monitor": {
+      "monitor_id": "system_monitor",
+      "name": "System Health Monitor",
+      "description": "Monitors CPU and RAM usage.",
+      "event_types": [
+        "SYSTEM_EVENT"
+      ],
+      "required_capabilities": [
+        "system_info"
+      ],
+      "interval_seconds": 30.0,
+      "enabled": true,
+      "privacy_level": "LOCAL_ONLY",
+      "status": "ERROR",
+      "last_poll_time": 1790784495.3404715,
+      "error_message": "'>' not supported between instances of 'MagicMock' and 'int'"
+    },
+    "model_server_monitor": {
+      "monitor_id": "model_server_monitor",
+      "name": "Local AI Model Server Monitor",
+      "description": "Monitors availability of local Ollama / AI inference server.",
+      "event_types": [
+        "SYSTEM_EVENT",
+        "NETWORK_EVENT"
+      ],
+      "required_capabilities": [
+        "local_model"
+      ],
+      "interval_seconds": 30.0,
+      "enabled": true,
+      "privacy_level": "LOCAL_ONLY",
+      "status": "ACTIVE",
+      "last_poll_time": 1790784497.3552325,
+      "error_message": null
+    },
+    "task_monitor": {
+      "monitor_id": "task_monitor",
+      "name": "Task Execution Monitor",
+      "description": "Listens for task execution progress, completion, or failure.",
+      "event_types": [
+        "TASK_EVENT"
+      ],
+      "required_capabilities": [
+        "task_planner"
+      ],
+      "interval_seconds": 0.0,
+      "enabled": true,
+      "privacy_level": "LOCAL_ONLY",
+      "status": "ACTIVE",
+      "last_poll_time": 0.0,
+      "error_message": null
+    }
+  },
+  "rules": [
+    {
+      "rule_id": "rule_battery_low",
+      "name": "Low Battery Alert",
+      "source_event_type": "SYSTEM_EVENT",
+      "condition_type": "threshold_below",
+      "target_key": "percent",
+      "threshold_value": 20.0,
+      "priority": "MEDIUM",
+      "cooldown_seconds": 600.0,
+      "notification_template": "Laptop battery is low ({percent}%). Please plug in your charger.",
+      "proactive_suggestion": "Would you like to enable power saver mode?",
+      "enabled": true,
+      "last_triggered_at": 0.0
+    },
+    {
+      "rule_id": "rule_disk_low",
+      "name": "Critically Low Disk Space",
+      "source_event_type": "SYSTEM_EVENT",
+      "condition_type": "threshold_below",
+      "target_key": "pct_free",
+      "threshold_value": 10.0,
+      "priority": "HIGH",
+      "cooldown_seconds": 1800.0,
+      "notification_template": "Disk space is critically low ({pct_free}% free on {path}).",
+      "proactive_suggestion": "I can help scan for temporary files and large caches.",
+      "enabled": true,
+      "last_triggered_at": 1790784497.3660433
+    },
+    {
+      "rule_id": "rule_local_ai_offline",
+      "name": "Local AI Offline",
+      "source_event_type": "SYSTEM_EVENT",
+      "condition_type": "equals",
+      "target_key": "status",
+      "threshold_value": "OFFLINE",
+      "priority": "MEDIUM",
+      "cooldown_seconds": 900.0,
+      "notification_template": "Local AI model server (Ollama) appears to be offline.",
+      "proactive_suggestion": "Would you like me to diagnose local server connectivity?",
+      "enabled": true,
+      "last_triggered_at": 1790784497.3701663
+    },
+    {
+      "rule_id": "rule_task_completed",
+      "name": "Task Completion Notice",
+      "source_event_type": "TASK_EVENT",
+      "condition_type": "equals",
+      "target_key": "status",
+      "threshold_value": "COMPLETED",
+      "priority": "LOW",
+      "cooldown_seconds": 5.0,
+      "notification_template": "Task '{goal}' has completed successfully.",
+      "proactive_suggestion": null,
+      "enabled": true,
+      "last_triggered_at": 0.0
+    },
+    {
+      "rule_id": "test_quiet",
+      "name": "Test Quiet",
+      "source_event_type": "SYSTEM_EVENT",
+      "condition_type": "equals",
+      "target_key": "test_quiet",
+      "threshold_value": true,
+      "priority": "LOW",
+      "cooldown_seconds": 0,
+      "notification_template": "{message}",
+      "proactive_suggestion": null,
+      "enabled": true,
+      "last_triggered_at": 0.0
+    },
+    {
+      "rule_id": "test_crit",
+      "name": "Test Crit",
+      "source_event_type": "SYSTEM_EVENT",
+      "condition_type": "equals",
+      "target_key": "test_crit",
+      "threshold_value": true,
+      "priority": "CRITICAL",
+      "cooldown_seconds": 0,
+      "notification_template": "{message}",
+      "proactive_suggestion": null,
+      "enabled": true,
+      "last_triggered_at": 1789896566.9379478
+    },
+    {
+      "rule_id": "test_quiet",
+      "name": "Test Quiet",
+      "source_event_type": "SYSTEM_EVENT",
+      "condition_type": "equals",
+      "target_key": "test_quiet",
+      "threshold_value": true,
+      "priority": "LOW",
+      "cooldown_seconds": 0,
+      "notification_template": "{message}",
+      "proactive_suggestion": null,
+      "enabled": true,
+      "last_triggered_at": 0.0
+    },
+    {
+      "rule_id": "test_crit",
+      "name": "Test Crit",
+      "source_event_type": "SYSTEM_EVENT",
+      "condition_type": "equals",
+      "target_key": "test_crit",
+      "threshold_value": true,
+      "priority": "CRITICAL",
+      "cooldown_seconds": 0,
+      "notification_template": "{message}",
+      "proactive_suggestion": null,
+      "enabled": true,
+      "last_triggered_at": 0.0
+    },
+    {
+      "rule_id": "test_quiet",
+      "name": "Test Quiet",
+      "source_event_type": "SYSTEM_EVENT",
+      "condition_type": "equals",
+      "target_key": "test_quiet",
+      "threshold_value": true,
+      "priority": "LOW",
+      "cooldown_seconds": 0,
+      "notification_template": "{message}",
+      "proactive_suggestion": null,
+      "enabled": true,
+      "last_triggered_at": 0.0
+    },
+    {
+      "rule_id": "test_crit",
+      "name": "Test Crit",
+      "source_event_type": "SYSTEM_EVENT",
+      "condition_type": "equals",
+      "target_key": "test_crit",
+      "threshold_value": true,
+      "priority": "CRITICAL",
+      "cooldown_seconds": 0,
+      "notification_template": "{message}",
+      "proactive_suggestion": null,
+      "enabled": true,
+      "last_triggered_at": 0.0
+    }
+  ],
+  "reminders": []
+}

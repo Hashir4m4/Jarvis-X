@@ -1,0 +1,1097 @@
+{
+  "tasks": [
+    {
+      "task_id": "morning_brief",
+      "command": "What do I need to do today?",
+      "schedule_type": "daily",
+      "schedule_value": "07:00",
+      "enabled": true,
+      "tts_notify": true,
+      "created_at": 1788429630.8587492,
+      "last_run": 1789189513.7116032,
+      "next_run": 1790818200.0,
+      "run_count": 1,
+      "description": "Morning brief and action items review"
+    },
+    {
+      "task_id": "plan_today",
+      "command": "Plan today's objectives and priorities.",
+      "schedule_type": "daily",
+      "schedule_value": "09:00",
+      "enabled": true,
+      "tts_notify": false,
+      "created_at": 1788429630.8587549,
+      "last_run": 1789189516.216855,
+      "next_run": 1790825400.0,
+      "run_count": 1,
+      "description": "Daily plan creation and alignment"
+    },
+    {
+      "task_id": "metrics_pull",
+      "command": "Summarize my metrics.",
+      "schedule_type": "daily",
+      "schedule_value": "14:00",
+      "enabled": true,
+      "tts_notify": false,
+      "created_at": 1788429630.8587573,
+      "last_run": 1789893001.2925837,
+      "next_run": 1790843400.0,
+      "run_count": 3,
+      "description": "Midday hardware and usage metrics pull"
+    },
+    {
+      "task_id": "close_the_day",
+      "command": "What changed today?",
+      "schedule_type": "daily",
+      "schedule_value": "19:00",
+      "enabled": true,
+      "tts_notify": true,
+      "created_at": 1788429630.858759,
+      "last_run": 1789189521.4422755,
+      "next_run": 1790861400.0,
+      "run_count": 2,
+      "description": "Evening digest and interaction change log"
+    },
+    {
+      "task_id": "broadcast_telemetry",
+      "command": "broadcast_telemetry",
+      "schedule_type": "interval",
+      "schedule_value": 2.0,
+      "enabled": true,
+      "tts_notify": false,
+      "created_at": 1790784839.3321142,
+      "last_run": null,
+      "next_run": null,
+      "run_count": 0,
+      "description": null
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "schedule_value": 0.01,
+      "enabled": true,
+      "tts_notify": false,
+      "created_at": 1790781589.5284178,
+      "last_run": null,
+      "next_run": null,
+      "run_count": 0,
+      "description": null
+    },
+    {
+      "task_id": "e2e_sched_test",
+      "command": "Summarize my metrics.",
+      "schedule_type": "interval",
+      "schedule_value": 60.0,
+      "enabled": true,
+      "tts_notify": false,
+      "created_at": 1790781420.144033,
+      "last_run": 1790781420.1518116,
+      "next_run": null,
+      "run_count": 1,
+      "description": null
+    }
+  ],
+  "history": [
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893494.8618355,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6892.71,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893501.7809134,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6863.37,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893508.6693506,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 11223.37,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893520.6917439,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6835.39,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893527.5553339,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6879.65,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893534.471349,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6837.07,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893541.3302045,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 11326.88,
+      "tts_notified": false
+    },
+    {
+      "task_id": "e2e_sched_test",
+      "command": "Summarize my metrics.",
+      "schedule_type": "interval",
+      "executed_at": 1789893555.3202882,
+      "status": "success",
+      "response": "Telemetry Snapshot: CPU is at 88.9%, RAM is at 56.2% (7.84 GB total), Core Temp is ~69\u00b0C, Swap is 22%.",
+      "execution_time_ms": 3503.43,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893553.262667,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 7093.48,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893560.3913834,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 7256.21,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893567.68216,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6881.9,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893574.591927,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 10909.67,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893586.34848,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6892.93,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893593.267995,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 7059.78,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893600.4677594,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6828.3,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893607.3171473,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 9374.52,
+      "tts_notified": false
+    },
+    {
+      "task_id": "e2e_sched_test",
+      "command": "Summarize my metrics.",
+      "schedule_type": "interval",
+      "executed_at": 1789893619.4884684,
+      "status": "success",
+      "response": "Telemetry Snapshot: CPU is at 86.0%, RAM is at 58.5% (7.84 GB total), Core Temp is ~68\u00b0C, Swap is 23%.",
+      "execution_time_ms": 3861.19,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893617.4627051,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6198.94,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893623.687396,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6878.66,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893630.5896811,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6820.33,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893637.432811,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 11277.58,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893649.667572,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6878.4,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893656.5695016,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 10614.8,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893668.0258925,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6816.24,
+      "tts_notified": false
+    },
+    {
+      "task_id": "e2e_sched_test",
+      "command": "Summarize my metrics.",
+      "schedule_type": "interval",
+      "executed_at": 1789893683.7126262,
+      "status": "success",
+      "response": "Telemetry Snapshot: CPU is at 52.9%, RAM is at 62.3% (7.84 GB total), Core Temp is ~58\u00b0C, Swap is 25%.",
+      "execution_time_ms": 3185.52,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893680.884732,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6199.58,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893687.1208022,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6820.55,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893693.961383,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6868.73,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893700.860184,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 12076.96,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893713.5725098,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6650.48,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893720.2443717,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6686.66,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893726.958477,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6643.0,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893733.6154885,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 11331.19,
+      "tts_notified": false
+    },
+    {
+      "task_id": "e2e_sched_test",
+      "command": "Summarize my metrics.",
+      "schedule_type": "interval",
+      "executed_at": 1789893747.6402085,
+      "status": "success",
+      "response": "Telemetry Snapshot: CPU is at 19.4%, RAM is at 65.7% (7.84 GB total), Core Temp is ~48\u00b0C, Swap is 26%.",
+      "execution_time_ms": 2784.14,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893745.5647798,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6828.7,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893752.421193,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6664.22,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893759.1042075,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6623.95,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893765.7563026,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 11236.04,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893777.6651912,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6679.33,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893784.369225,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6663.98,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893791.0584998,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6649.91,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893797.7264156,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 11267.76,
+      "tts_notified": false
+    },
+    {
+      "task_id": "e2e_sched_test",
+      "command": "Summarize my metrics.",
+      "schedule_type": "interval",
+      "executed_at": 1789893811.7324624,
+      "status": "success",
+      "response": "Telemetry Snapshot: CPU is at 51.4%, RAM is at 76.5% (7.84 GB total), Core Temp is ~57\u00b0C, Swap is 31%.",
+      "execution_time_ms": 2771.27,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893809.6562114,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6741.37,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893816.4206774,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6717.78,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893823.1584482,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6654.46,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893829.8313308,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 11186.38,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893841.735972,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6690.59,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893848.44139,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6953.56,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893855.4185038,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6682.19,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893862.1297262,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 10919.71,
+      "tts_notified": false
+    },
+    {
+      "task_id": "e2e_sched_test",
+      "command": "Summarize my metrics.",
+      "schedule_type": "interval",
+      "executed_at": 1789893875.7242703,
+      "status": "success",
+      "response": "Telemetry Snapshot: CPU is at 65.5%, RAM is at 89.2% (7.84 GB total), Core Temp is ~62\u00b0C, Swap is 36%.",
+      "execution_time_ms": 3122.98,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893873.6592627,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6999.08,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893880.6849856,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6899.09,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893887.618485,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6775.71,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893894.4154189,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 10784.38,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893905.84759,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6654.17,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893912.5165706,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6723.59,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893919.2656002,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6709.67,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893925.9958055,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 11237.8,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893940.3683107,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 8139.48,
+      "tts_notified": false
+    },
+    {
+      "task_id": "e2e_sched_test",
+      "command": "Summarize my metrics.",
+      "schedule_type": "interval",
+      "executed_at": 1789893942.8365664,
+      "status": "success",
+      "response": "Telemetry Snapshot: CPU is at 53.2%, RAM is at 98.5% (7.84 GB total), Core Temp is ~58\u00b0C, Swap is 39%.",
+      "execution_time_ms": 6388.2,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893949.228483,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 7014.58,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893956.3089828,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6683.99,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893963.020776,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 8669.68,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893972.280359,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6663.51,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893978.963406,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6854.96,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789893985.8372624,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6736.37,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789894910.5266185,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 7224.03,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789894917.7872458,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6653.39,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789894924.4546096,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6660.26,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789894931.1433623,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 11333.43,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789894943.123737,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6713.4,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789894949.86126,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6806.69,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789894956.6942568,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6684.1,
+      "tts_notified": false
+    },
+    {
+      "task_id": "e2e_sched_test",
+      "command": "Summarize my metrics.",
+      "schedule_type": "interval",
+      "executed_at": 1789894965.4431813,
+      "status": "success",
+      "response": "Telemetry Snapshot: CPU is at 70.1%, RAM is at 96.5% (7.84 GB total), Core Temp is ~63\u00b0C, Swap is 39%.",
+      "execution_time_ms": 2906.75,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789894963.394441,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 11103.97,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789894975.1400285,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6643.99,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789894981.802946,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6759.04,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789894988.5853724,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6681.01,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789894995.2793245,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 11246.48,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789895007.3042583,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6731.8,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789895014.0651505,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6673.7,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789895020.7644732,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6678.1,
+      "tts_notified": false
+    },
+    {
+      "task_id": "e2e_sched_test",
+      "command": "Summarize my metrics.",
+      "schedule_type": "interval",
+      "executed_at": 1789895029.5255172,
+      "status": "success",
+      "response": "Telemetry Snapshot: CPU is at 86.5%, RAM is at 96.2% (7.84 GB total), Core Temp is ~68\u00b0C, Swap is 38%.",
+      "execution_time_ms": 2967.04,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789895027.4693148,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 11063.57,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789895039.1495318,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6743.09,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789895045.929607,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6736.51,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789895052.6913009,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6688.31,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789895059.4076083,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 11171.96,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789895071.6436243,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6860.87,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789895078.526204,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6684.28,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789895085.2346277,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 9831.42,
+      "tts_notified": false
+    },
+    {
+      "task_id": "e2e_sched_test",
+      "command": "Summarize my metrics.",
+      "schedule_type": "interval",
+      "executed_at": 1789895095.07267,
+      "status": "success",
+      "response": "Telemetry Snapshot: CPU is at 71.1%, RAM is at 98.4% (7.84 GB total), Core Temp is ~63\u00b0C, Swap is 39%.",
+      "execution_time_ms": 14966.28,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789895101.971862,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 9200.65,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789895111.194709,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 12105.57,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789895126.9450107,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 7449.71,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789895134.4127533,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 8951.84,
+      "tts_notified": false
+    },
+    {
+      "task_id": "test_job",
+      "command": "test_job",
+      "schedule_type": "interval",
+      "executed_at": 1789895144.0545695,
+      "status": "success",
+      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
+      "execution_time_ms": 6723.74,
+      "tts_notified": false
+    },
+    {
+      "task_id": "e2e_sched_test",
+      "command": "Summarize my metrics.",
+      "schedule_type": "interval",
+      "executed_at": 1790781420.1518116,
+      "status": "success",
+      "response": "Telemetry Snapshot: CPU is at <MagicMock name='mock.cpu_percent()' id='1772296680992'>%, RAM is at <MagicMock name='mock.virtual_memory().percent' id='1772315479408'>% (<MagicMock name='mock.virtual_memory().total.__truediv__().__round__()' id='1772315486128'> GB total), Core Temp is ~<MagicMock nam",
+      "execution_time_ms": 5171.61,
+      "tts_notified": false
+    }
+  ]
+}

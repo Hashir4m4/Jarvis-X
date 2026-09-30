@@ -1,0 +1,16 @@
+{
+  "environment": {
+    "profile": "production",
+    "mode": "hybrid",
+    "debug": false
+  },
+  "logging": {
+    "level": "INFO"
+  },
+  "features": {
+    "developer_mode": false
+  },
+  "network": {
+    "backend_host": "127.0.0.1"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "llm": {
+    "provider": "ollama",
+    "base_url": "http://localhost:11434",
+    "model": "qwen2.5-coder:7b",
+    "temperature": 0.7,
+    "system_prompt": "You are Jarvis, a highly capable, autonomous, and intelligent AI assistant. You are concise, highly analytical, and always ready to help your creator. Keep your answers brief, as they will be spoken aloud."
+  },
+  "memory": {
+    "max_context_messages": 20
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "logs/jarvis.log"
+  },
+  "voice": {
+    "wake_word": "jarvis",
+    "tts_engine": "pyttsx3",
+    "stt_engine": "whisper",
+    "whisper_model": "base",
+    "energy_threshold": 300,
+    "dynamic_energy_threshold": true,
+    "pause_threshold": 0.8
+  },
+  "vision": {
+    "camera_index": 0,
+    "target_fps": 15,
+    "enable_object_detection": true,
+    "enable_face_detection": true,
+    "enable_hand_tracking": true,
+    "enable_ocr": true,
+    "enable_barcode": true,
+    "yolo_model": "yolo11n.pt"
+  },
+  "memory_advanced": {
+    "sqlite_db_path": "memory/database_storage/jarvis.sqlite",
+    "chroma_db_path": "memory/database_storage/chroma",
+    "embedding_model": "all-MiniLM-L6-v2",
+    "retrieval_top_k": 3,
+    "importance_threshold": 0.5
+  },
+  "vlm": {
+    "model": "moondream",
+    "host": "http://localhost:11434",
+    "max_image_size": [800, 800]
+  }
+}

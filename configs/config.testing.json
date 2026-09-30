@@ -1,0 +1,18 @@
+{
+  "environment": {
+    "profile": "testing",
+    "mode": "offline",
+    "debug": true
+  },
+  "logging": {
+    "level": "WARNING"
+  },
+  "local_ai": {
+    "provider": "mock"
+  },
+  "features": {
+    "voice_enabled": false,
+    "vision_enabled": false,
+    "cloud_ai_enabled": false
+  }
+}

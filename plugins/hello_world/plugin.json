@@ -1,0 +1,6 @@
+{
+  "name": "Hello World Plugin",
+  "version": "1.0",
+  "author": "Jarvis Creator",
+  "description": "A sample plugin that introduces itself and reverses a string."
+}

@@ -1,0 +1,12 @@
+{
+  "environment": {
+    "mode": "offline"
+  },
+  "features": {
+    "cloud_ai_enabled": false
+  },
+  "routing": {
+    "routing_preference": "LOCAL",
+    "privacy_policy": "LOCAL_ONLY"
+  }
+}
