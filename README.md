@@ -12,20 +12,20 @@ $$\text{VOICE / TEXT} \longrightarrow \text{CENTRAL ROUTER} \longrightarrow \tex
 
 ```mermaid
 graph TD
-    IN[Voice / Text / Schedule Input] --> ROUTER[Central Router]
-    ROUTER --> SKILLS[Skill Registry]
-    SKILLS --> BRIEF[Morning Brief]
-    SKILLS --> PLAN[Plan Today]
-    SKILLS --> METRICS[Metrics Pull]
-    SKILLS --> CLOSE[Close the Day]
-    SKILLS --> CODE[Multi-Agent Coder]
-    SKILLS --> SYS[System Diagnostics]
+    IN["Voice / Text / Schedule Input"] --> ROUTER["Central Router"]
+    ROUTER --> SKILLS["Skill Registry"]
+    SKILLS --> BRIEF["Morning Brief"]
+    SKILLS --> PLAN["Plan Today"]
+    SKILLS --> METRICS["Metrics Pull"]
+    SKILLS --> CLOSE["Close the Day"]
+    SKILLS --> CODE["Multi-Agent Coder"]
+    SKILLS --> SYS["System Diagnostics"]
     
-    BRIEF & PLAN & METRICS & CLOSE & CODE & SYS --> SEC[Security Proxy (READ/WRITE/EXEC/DESTRUCTIVE)]
-    SEC --> MEM[Unified Memory: Obsidian Vault + SQLite + ChromaDB]
-    MEM --> RESP[Structured Response]
-    RESP --> TTS[TTS Speech Synthesis]
-    RESP --> HUD[Single-Screen HUD Command Center]
+    BRIEF & PLAN & METRICS & CLOSE & CODE & SYS --> SEC["Security Proxy (READ/WRITE/EXEC/DESTRUCTIVE)"]
+    SEC --> MEM["Unified Memory: Obsidian Vault + SQLite + ChromaDB"]
+    MEM --> RESP["Structured Response"]
+    RESP --> TTS["TTS Speech Synthesis"]
+    RESP --> HUD["Single-Screen HUD Command Center"]
 ```
 
 ---
