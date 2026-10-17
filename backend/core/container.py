@@ -24,6 +24,8 @@ from backend.orchestrator.orchestrator import JarvisOrchestrator
 from backend.proactive import ProactiveEngine, MonitorRegistry
 from backend.router.central_router import CentralRouter
 from backend.learning.engine import LearningEngine
+from backend.goals.engine import GoalManagerEngine
+from backend.goals.decomposition import GoalDecompositionEngine
 
 
 logger = logging.getLogger("JARVIS.Container")
@@ -106,6 +108,18 @@ class AppContainer:
 
         # 7. Learning System
         self.learning_engine = LearningEngine(self.config, self.kernel.event_bus, self.memory)
+
+        # 8. Goal Management System
+        self.goal_engine = GoalManagerEngine(
+            memory_api=self.memory,
+            event_bus=self.kernel.event_bus,
+            security_proxy=self.security,
+            config=self.config
+        )
+        self.goal_decomposition_engine = GoalDecompositionEngine(
+            llm_client=getattr(self.brain, "llm", None),
+            config=self.config
+        )
 
         self.central_router = CentralRouter(
             skill_registry=self.skill_registry,

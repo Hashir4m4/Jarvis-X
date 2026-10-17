@@ -41,6 +41,8 @@ class JarvisCore:
         self.interaction_engine = self.container.interaction_engine
         self.orchestrator = self.container.orchestrator
         self.learning_engine = self.container.learning_engine
+        self.goal_engine = getattr(self.container, "goal_engine", None)
+        self.goal_decomposition_engine = getattr(self.container, "goal_decomposition_engine", None)
         self.voice_manager = None
         self.plugin_manager = None
         self.diagnostics_engine = None
@@ -56,6 +58,7 @@ class JarvisCore:
         from backend.skills.brief_skill import BriefSkill
         from backend.skills.close_day_skill import CloseDaySkill
         from backend.skills.conversation_skill import ConversationSkill
+        from backend.skills.goal_skill import GoalSkill
 
         self.skill_registry.register(SystemSkill())
         self.skill_registry.register(MetricsSkill())
@@ -67,6 +70,10 @@ class JarvisCore:
         self.skill_registry.register(BriefSkill())
         self.skill_registry.register(CloseDaySkill())
         self.skill_registry.register(ConversationSkill(brain=self.brain))
+        self.skill_registry.register(GoalSkill(
+            engine=self.goal_engine,
+            decomposition_engine=self.goal_decomposition_engine
+        ))
 
     def _handle_agent_state_update(self, agent_id: str, state: str, details: Dict[str, Any]):
         pass

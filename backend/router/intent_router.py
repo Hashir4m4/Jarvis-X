@@ -57,6 +57,19 @@ class IntentRouter(BaseIntentRouter):
             (r"^(?:create (?:a )?plan (?:to|for)|plan) (.+)$", "plan", "create_plan", lambda m: {"task": m.group(1).strip()}, 0.95),
             (r"\b(?:explain (?:the )?plan|breakdown plan)\b", "plan", "explain_plan", lambda m: {"task": "active_plan"}, 0.92),
 
+            # 4.1 Goal Management System (Prompt 56 Stage 5)
+            (r"\b(?:create|set|add|new)\s+(?:a\s+)?goal(?:\s+to|\s+for|\s*:\s*|\s+)(.+)$", "goal", "create_goal", lambda m: {"title": m.group(1).strip().rstrip(".")}, 0.98),
+            (r"\b(?:break(?:\s+down)?|decompose)\s+(?:this\s+goal|goal)\s+(?:into\s+smaller\s+tasks|into\s+subgoals|into\s+tasks)(?:\s*:\s*|\s+for\s+|\s+)?(.*)$", "goal", "decompose_goal", lambda m: {"goal_id": m.group(1).strip().strip(".?\"'")} if m.group(1).strip() else {}, 0.98),
+            (r"\b(?:show|list|get|view)\s+(?:all\s+)?(?:my\s+)?active\s+goals\b", "goal", "list_active_goals", {}, 0.98),
+            (r"\b(?:show|list|get|view)\s+(?:all\s+)?(?:my\s+)?goals\b", "goal", "list_goals", {}, 0.97),
+            (r"\b(?:show|get|view)\s+goal\s+hierarchy\b", "goal", "view_goal_hierarchy", {}, 0.98),
+            (r"\b(?:what\s+is\s+my\s+progress\s+on\s+(?:the\s+)?(?:goal\s+)?|check\s+progress\s+(?:on|for)\s+(?:goal\s+)?|progress\s+on\s+)(.+)$", "goal", "check_progress", lambda m: {"title": m.group(1).strip().strip(".?\"'")}, 0.98),
+            (r"\b(?:pause\s+goal\s+|pause\s+)(goal_[a-zA-Z0-9_\-]+|\S+)\b", "goal", "pause_goal", lambda m: {"goal_id": m.group(1).strip().strip(".?\"'")}, 0.98),
+            (r"\b(?:resume\s+goal\s+|resume\s+)(goal_[a-zA-Z0-9_\-]+|\S+)\b", "goal", "resume_goal", lambda m: {"goal_id": m.group(1).strip().strip(".?\"'")}, 0.98),
+            (r"\b(?:mark\s+goal\s+|complete\s+goal\s+|complete\s+)(goal_[a-zA-Z0-9_\-]+|\S+)(?:\s+as\s+completed)?\b", "goal", "complete_goal", lambda m: {"goal_id": m.group(1).strip().strip(".?\"'")}, 0.98),
+            (r"\b(?:cancel\s+goal\s+|cancel\s+)(goal_[a-zA-Z0-9_\-]+|\S+)\b", "goal", "cancel_goal", lambda m: {"goal_id": m.group(1).strip().strip(".?\"'")}, 0.98),
+            (r"\b(?:view\s+goal\s+|show\s+goal\s+|goal\s+details\s+for\s+)(goal_[a-zA-Z0-9_\-]+|\S+)\b", "goal", "view_goal", lambda m: {"goal_id": m.group(1).strip().strip(".?\"'")}, 0.97),
+
             # 5. Vault & Long-Term Memory
             (r"\bremember that (.+)$", "memory", "remember", {}, 0.98),
             (r"\b(?:remember|save memory):?\s*(.+)$", "memory", "remember", {}, 0.95),

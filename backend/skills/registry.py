@@ -21,6 +21,7 @@ from .memory_skill import MemorySkill
 from .desktop_skill import DesktopSkill
 from .screen_vision_skill import ScreenVisionSkill
 from .browser_skill import BrowserSkill
+from .goal_skill import GoalSkill
 
 logger = logging.getLogger("JARVIS.SkillRegistry")
 
@@ -38,7 +39,8 @@ ALL_SKILLS = [
     InboxSkill,
     MemorySkill,
     DesktopSkill,
-    ScreenVisionSkill
+    ScreenVisionSkill,
+    GoalSkill
 ]
 
 

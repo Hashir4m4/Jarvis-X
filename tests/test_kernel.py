@@ -49,21 +49,31 @@ class TestKernel(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(status["result"], "done")
 
     async def test_scheduler(self):
-        manager = TaskManager()
-        scheduler = Scheduler(manager)
-        
-        count = 0
-        async def recurring_task():
-            nonlocal count
-            count += 1
-            
-        scheduler.schedule_interval("test_job", 0.01, recurring_task)
-        scheduler.start()
-        
-        await asyncio.sleep(0.15)
-        scheduler.stop()
-        
-        self.assertGreaterEqual(count, 1)
+        import tempfile
+        import shutil
+        temp_dir = tempfile.mkdtemp()
+        temp_storage = os.path.join(temp_dir, "test_schedules.json")
+        try:
+            manager = TaskManager()
+            scheduler = Scheduler(manager, storage_path=temp_storage)
+
+            count = 0
+            async def recurring_task():
+                nonlocal count
+                count += 1
+
+            scheduler.schedule_interval("test_job", 0.01, recurring_task)
+            scheduler.start()
+
+            # Allow scheduler loop to run interval
+            await asyncio.sleep(0.15)
+            scheduler.stop()
+
+            self.assertGreaterEqual(count, 1)
+        finally:
+            shutil.rmtree(temp_dir, ignore_errors=True)
+
+
 
     async def test_kernel_init(self):
         kernel = JarvisKernel({"llm": {}})
