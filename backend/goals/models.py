@@ -147,7 +147,10 @@ class Goal:
         """Validates all internal constraints for this individual Goal model."""
         if not self.goal_id or not isinstance(self.goal_id, str) or not self.goal_id.strip():
             raise GoalValidationError("Goal goal_id must be a non-empty string.")
+        if not re.match(r"^[a-zA-Z0-9_\-]+$", self.goal_id):
+            raise GoalValidationError(f"Invalid goal_id format: '{self.goal_id}'. Must contain only alphanumeric characters, underscores, and hyphens.")
         if not self.title or not isinstance(self.title, str) or not self.title.strip():
+
             raise GoalValidationError("Goal title must be a non-empty string.")
         if not isinstance(self.description, str):
             raise GoalValidationError("Goal description must be a string.")

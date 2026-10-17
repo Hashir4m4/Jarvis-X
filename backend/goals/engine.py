@@ -193,13 +193,17 @@ class GoalManagerEngine:
             vault_manager = getattr(self.memory_api, "vault", None)
             if not vault_manager:
                 return True
-            target_path = os.path.join(vault_manager.vault_root, "goals", f"{goal_id}.md")
+            if hasattr(vault_manager, "_safe_resolve_path"):
+                target_path = vault_manager._safe_resolve_path(f"{goal_id}.md", base_folder="goals")
+            else:
+                target_path = os.path.join(vault_manager.vault_root, "goals", f"{goal_id}.md")
             if os.path.isfile(target_path):
                 os.remove(target_path)
             return True
         except Exception as e:
             logger.error(f"Failed to delete goal file '{goal_id}.md': {e}")
             return False
+
 
     # ─────────────────────────────────────────────────────────────
     # Security & Authorization Helper
