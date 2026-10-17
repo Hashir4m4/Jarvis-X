@@ -104,6 +104,7 @@ class MockHealthCheck(ComponentHealthCheck):
         return self._cid
 
     async def check(self, trigger=CheckTrigger.ON_DEMAND, dependency_status=None) -> HealthCheckResult:
+        self._result.trigger = trigger
         return self._result
 
 
@@ -466,7 +467,8 @@ async def test_17_recovery_attempt_limits():
     action = policy.get_action(action_id)
     max_attempts = action.max_attempts
 
-    with patch("backend.diagnostics.recovery_policy._retry_local_ai_connection", new=AsyncMock(return_value=False)):
+    with patch("backend.diagnostics.recovery_policy._retry_local_ai_connection", new=AsyncMock(return_value=False)), \
+             patch.object(policy, "is_on_cooldown", return_value=False):
         async def verify():
             return HealthStatus.UNAVAILABLE
 
@@ -515,7 +517,8 @@ async def test_19_recovery_failure():
     policy = RecoveryPolicyRegistry()
     executor = RecoveryExecutor(policy_registry=policy, components={"config": {}})
 
-    with patch("backend.diagnostics.recovery_policy._retry_local_ai_connection", new=AsyncMock(return_value=False)):
+    with patch("backend.diagnostics.recovery_policy._retry_local_ai_connection", new=AsyncMock(return_value=False)), \
+             patch.object(policy, "is_on_cooldown", return_value=False):
         async def verify():
             return HealthStatus.UNAVAILABLE
 
@@ -782,7 +785,8 @@ def test_dependency_chain_resolution():
     assert "audio_device" in chain
 
 
-def test_level3_action_provides_guidance_not_execution():
+@pytest.mark.asyncio
+async def test_level3_action_provides_guidance_not_execution():
     """LEVEL_3 actions return user_guidance and never mark success=True."""
     policy = RecoveryPolicyRegistry()
     executor = RecoveryExecutor(policy_registry=policy)
@@ -790,7 +794,7 @@ def test_level3_action_provides_guidance_not_execution():
     async def run():
         return await executor.attempt("check_os_audio_settings")
 
-    result = asyncio.get_event_loop().run_until_complete(run())
+    result = await run()
     assert result.requires_user_action
     assert result.user_guidance
     assert not result.success

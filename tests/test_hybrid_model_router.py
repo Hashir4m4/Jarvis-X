@@ -31,7 +31,15 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 # Mock external hardware/audio libraries for fast deterministic testing
 sys.modules.setdefault('chromadb', MagicMock())
 sys.modules.setdefault('pyautogui', MagicMock())
-sys.modules.setdefault('psutil', MagicMock())
+class MockVirtualMemory:
+    @property
+    def available(self):
+        return 32 * (1024 ** 3)
+class MockPsutil:
+    @staticmethod
+    def virtual_memory():
+        return MockVirtualMemory()
+
 sys.modules.setdefault('pycaw', MagicMock())
 sys.modules.setdefault('pycaw.pycaw', MagicMock())
 sys.modules.setdefault('comtypes', MagicMock())
@@ -72,7 +80,13 @@ def _make_request(**kwargs) -> ModelSelectionRequest:
 class TestHybridModelRouter(unittest.TestCase):
 
     def setUp(self):
+        import unittest.mock
+        self.patcher = unittest.mock.patch('backend.llm.resource_manager.psutil', MockPsutil)
+        self.patcher.start()
         self.router = ModelRouter(config={})
+
+    def tearDown(self):
+        self.patcher.stop()
 
     # ── 1. Direct system command → no LLM ─────────────────────────────────
     def test_01_direct_system_command_no_llm(self):
@@ -380,7 +394,13 @@ class TestModelRouterHUDPayload(unittest.TestCase):
     """Tests for HUD telemetry generation."""
 
     def setUp(self):
+        import unittest.mock
+        self.patcher = unittest.mock.patch('backend.llm.resource_manager.psutil', MockPsutil)
+        self.patcher.start()
         self.router = ModelRouter(config={})
+
+    def tearDown(self):
+        self.patcher.stop()
 
     def test_local_hud_payload(self):
         result = ModelSelectionResult(
@@ -421,7 +441,13 @@ class TestRouterFallbackChain(unittest.TestCase):
     """Tests for fallback chain behavior."""
 
     def setUp(self):
+        import unittest.mock
+        self.patcher = unittest.mock.patch('backend.llm.resource_manager.psutil', MockPsutil)
+        self.patcher.start()
         self.router = ModelRouter(config={})
+
+    def tearDown(self):
+        self.patcher.stop()
 
     def test_privacy_never_falls_back_to_cloud(self):
         """LOCAL_ONLY must never fall back from local to cloud."""

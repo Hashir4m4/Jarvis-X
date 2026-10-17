@@ -213,6 +213,7 @@ class JarvisOrchestrator:
                 if social_output:
                     await self._emit_state(ExecutionState.COMPLETED, context)
                     logger.info("[ORCHESTRATOR] Social interaction short-circuit.")
+                    context.selected_skill = "conversation"
                     return self._build_result(
                         context, "success", social_output.text, start_time, ExecutionState.COMPLETED
                     )

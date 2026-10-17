@@ -386,10 +386,9 @@ class TestProactiveIntelligenceSystem(unittest.IsolatedAsyncioTestCase):
     # 22. Task Engine Integration
 
     async def test_22_task_engine_integration(self):
-        self.engine.task_planner = AsyncMock()
-        self.engine.execution_engine = AsyncMock()
-        self.engine.task_planner.create_plan.return_value = {"mock": "plan"}
-        
+        self.engine.orchestrator = AsyncMock()
+
+
         # This will be HIGH priority -> ASK_CONFIRMATION
         event_data = {
             "event_id": "test_disk",
@@ -401,24 +400,24 @@ class TestProactiveIntelligenceSystem(unittest.IsolatedAsyncioTestCase):
         self.engine.rules[1].last_triggered_at = 0
         notif = await self.engine.handle_event(event_data)
         self.assertIsNotNone(notif)
-        self.engine.task_planner.create_plan.assert_not_called()
+        self.engine.orchestrator.process_request.assert_not_called()
         self.assertIn("[Requires Confirmation]", notif.message)
-        
+
         # Now trigger a MEDIUM priority -> EXECUTE
         self.engine.rules[1].priority = EventPriority.MEDIUM
         self.engine.rules[1].last_triggered_at = 0
         event_data["priority"] = "MEDIUM"
         event_data["source"] = "disk_monitor_2"
         notif2 = await self.engine.handle_event(event_data)
-        self.engine.task_planner.create_plan.assert_called_once()
+        self.engine.orchestrator.process_request.assert_called_once()
         self.assertIn("[Auto-Executing]", notif2.message)
 
         self.assertIn("[Requires Confirmation]", notif.message)
 
     # 23. Memory Integration
     async def test_23_memory_integration(self):
-        self.engine.memory = AsyncMock()
-        
+        self.engine.memory = MagicMock()
+
         event_data = {
             "event_id": "test_disk_2",
             "event_type": "SYSTEM_EVENT",
@@ -429,10 +428,10 @@ class TestProactiveIntelligenceSystem(unittest.IsolatedAsyncioTestCase):
         # Clear cooldown
         self.engine.rules[1].last_triggered_at = 0
         await self.engine.handle_event(event_data)
-        
+
         # Verify memory was called for high priority event
-        self.engine.memory.add_memory.assert_called_once()
-        
+        self.engine.memory.write_memory.assert_called_once()
+
     # 24. Scheduler Integration
     async def test_24_scheduler_integration(self):
         task_id = self.engine.scheduler.schedule_task({"event_id": "test", "event_type": "CUSTOM_EVENT"}, 0.1)
@@ -445,8 +444,9 @@ class TestProactiveIntelligenceSystem(unittest.IsolatedAsyncioTestCase):
 
     # 25. Error recovery
     async def test_25_error_recovery(self):
-        self.engine.task_planner = AsyncMock()
-        self.engine.task_planner.create_plan.side_effect = Exception("Test planner failure")
+        self.engine.orchestrator = AsyncMock()
+        self.engine.orchestrator = AsyncMock()
+        self.engine.orchestrator.process_request.side_effect = Exception("Test orchestrator failure")
         event_data = {
             "event_id": "test_err",
             "event_type": "SYSTEM_EVENT",
@@ -461,7 +461,3 @@ class TestProactiveIntelligenceSystem(unittest.IsolatedAsyncioTestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
-
-
-

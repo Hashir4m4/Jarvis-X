@@ -42,6 +42,6 @@ def test_memory_models_extended():
         category=MemoryCategory.PROJECT,
         importance=MemoryImportance.CRITICAL,
         privacy_level=PrivacyLevel.LOCAL_ONLY,
-        confidence=MemoryConfidence.USER_STATED
+        confidence=MemoryConfidence.USER_EXPLICIT
     )
     assert decision.privacy_level == "local_only"

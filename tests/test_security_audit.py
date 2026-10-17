@@ -400,7 +400,7 @@ class TestSecurityAuditSuite(unittest.TestCase):
         bad_action = DesktopAction(
             action_type=ActionType.DELETE_FILE,
             target=os.path.join(self.test_dir, "temp.txt"),
-            risk_level=RiskLevel.HIGH
+            risk_level=RiskLevel.RESTRICTED
         )
         res_denied = queue.execute_single(bad_action)
         self.assertFalse(res_denied.success)

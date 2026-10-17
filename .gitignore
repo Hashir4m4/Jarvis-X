@@ -79,3 +79,22 @@ Thumbs.db
 *.ntvs*
 *.njsproj
 *.sln
+
+# Backups & Temporary Scripts
+*.orig
+*.bak
+fix_*.py
+patch_*.py
+patch.py
+test_b_runner.py
+test_startup.py
+failure_batch.txt
+full_test_results.txt
+pytest_out.txt
+
+# Obsidian workspace caches
+.obsidian/workspace.json
+.obsidian/graph.json
+
+# Runtime Generated Vault Memories
+vault/raw/

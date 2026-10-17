@@ -1,4 +1,4 @@
-import re
+﻿import re
 import logging
 from typing import Dict, Any, List, Optional, Tuple
 
@@ -49,11 +49,33 @@ PATTERNS = {
 }
 
 
+
+class DecisionAction(str):
+    IGNORE = "IGNORE"
+    NOTIFY = "NOTIFY"
+    ASK_CONFIRMATION = "ASK_CONFIRMATION"
+    EXECUTE = "EXECUTE"
+
 class DecisionEngine:
     """
     Evaluates incoming requests to determine task category, required capabilities,
     execution strategy, model selection, tool/agent needs, and memory persistence policies.
     """
+    @staticmethod
+    def evaluate(event, rule_suggestion: Optional[str] = None) -> str:
+        suggestion = str(rule_suggestion).lower() if rule_suggestion else ""
+        if "diagnose" in suggestion or "cleanup" in suggestion or "scan" in suggestion:
+            priority = getattr(event, "priority", None)
+            # Try to import EventPriority dynamically if not present
+            try:
+                from backend.proactive.models import EventPriority
+                if priority in (EventPriority.HIGH, EventPriority.CRITICAL):
+                    return DecisionAction.ASK_CONFIRMATION
+            except ImportError:
+                pass
+            return DecisionAction.EXECUTE
+
+        return DecisionAction.NOTIFY
 
     @staticmethod
     def classify_task(user_input: str, intent: Optional[Intent] = None) -> TaskCategory:
@@ -158,12 +180,12 @@ class DecisionEngine:
     def should_save_memory(task_cat: TaskCategory, skill_name: Optional[str], success: bool, user_input: str = "") -> 'MemoryDecision':
         """Determines if and how the result should be preserved in Obsidian Vault / SQLite memory."""
         from backend.memory.memory_models import MemoryDecision, MemoryCategory, MemoryImportance
-        
+
         if not success:
             return MemoryDecision.discard()
-            
+
         lower_input = user_input.lower()
-        
+
         # Explicit memory skills handle their own persistence, but we record the command itself
         if skill_name == "memory":
             return MemoryDecision(should_save=True, category=MemoryCategory.SEMANTIC, importance=MemoryImportance.CRITICAL)
@@ -179,7 +201,7 @@ class DecisionEngine:
         # Categorize by task/skill
         if task_cat in (TaskCategory.PLANNING_TASK, TaskCategory.RESEARCH_TASK):
             return MemoryDecision(should_save=True, category=MemoryCategory.PROJECT, importance=MemoryImportance.MEDIUM)
-            
+
         if skill_name in ("plan", "close_day", "brief", "metrics", "vault", "coding"):
             return MemoryDecision(should_save=True, category=MemoryCategory.EPISODIC, importance=MemoryImportance.MEDIUM)
 

@@ -139,7 +139,7 @@ class TestDesktopAutomation(unittest.TestCase):
         self.security.confirmation_callback = lambda action, details: True
         action = DesktopAction(action_type=ActionType.DELETE_FILE, target=file_to_delete)
         self.assertTrue(action.requires_confirmation)
-        self.assertEqual(action.risk_level, RiskLevel.HIGH)
+        self.assertEqual(action.risk_level, RiskLevel.RESTRICTED)
 
         res = self.queue_mgr.execute_single(action)
         self.assertTrue(res.success)
@@ -164,7 +164,7 @@ class TestDesktopAutomation(unittest.TestCase):
     def test_10_get_system_info(self):
         res = self.controller.get_system_info()
         self.assertTrue(res.success)
-        self.assertEqual(res.risk_level, RiskLevel.LOW)
+        self.assertEqual(res.risk_level, RiskLevel.SAFE)
         self.assertIn("os", res.data)
         self.assertIn("cpu_percent", res.data)
         self.assertIn("ram_used_percent", res.data)

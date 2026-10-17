@@ -47,7 +47,10 @@ class CloudProviderManager:
         llm_cfg = self.config.get("llm", {})
 
         # 1. OpenAI / OpenAI-Compatible Provider
-        openai_key = llm_cfg.get("openai_api_key") or os.getenv("OPENAI_API_KEY", "")
+        if "openai_api_key" in llm_cfg:
+            openai_key = llm_cfg["openai_api_key"]
+        else:
+            openai_key = os.getenv("OPENAI_API_KEY", "")
         openai_base = llm_cfg.get("openai_base_url") or os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
         openai_model = llm_cfg.get("openai_model") or os.getenv("OPENAI_MODEL", self.cloud_models.general_model)
         self._providers["openai"] = OpenAICompatibleProvider(
@@ -58,7 +61,10 @@ class CloudProviderManager:
         )
 
         # 2. Anthropic Provider
-        anthropic_key = llm_cfg.get("anthropic_api_key") or os.getenv("ANTHROPIC_API_KEY", "")
+        if "anthropic_api_key" in llm_cfg:
+            anthropic_key = llm_cfg["anthropic_api_key"]
+        else:
+            anthropic_key = os.getenv("ANTHROPIC_API_KEY", "")
         anthropic_model = llm_cfg.get("anthropic_model") or os.getenv("ANTHROPIC_MODEL", self.cloud_models.coding_model)
         self._providers["anthropic"] = AnthropicProvider(
             api_key=anthropic_key,
@@ -66,7 +72,10 @@ class CloudProviderManager:
         )
 
         # 3. Google Gemini Provider
-        gemini_key = llm_cfg.get("gemini_api_key") or os.getenv("GEMINI_API_KEY", "")
+        if "gemini_api_key" in llm_cfg:
+            gemini_key = llm_cfg["gemini_api_key"]
+        else:
+            gemini_key = os.getenv("GEMINI_API_KEY", "")
         gemini_model = llm_cfg.get("gemini_model") or os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
         self._providers["gemini"] = GeminiProvider(
             api_key=gemini_key,
@@ -74,7 +83,10 @@ class CloudProviderManager:
         )
 
         # 4. Optional Groq (OpenAI-compatible) Provider
-        groq_key = llm_cfg.get("groq_api_key") or os.getenv("GROQ_API_KEY", "")
+        if "groq_api_key" in llm_cfg:
+            groq_key = llm_cfg["groq_api_key"]
+        else:
+            groq_key = os.getenv("GROQ_API_KEY", "")
         if groq_key:
             self._providers["groq"] = OpenAICompatibleProvider(
                 api_key=groq_key,

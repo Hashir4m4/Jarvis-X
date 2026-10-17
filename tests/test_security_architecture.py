@@ -113,7 +113,7 @@ class TestSecurityArchitecture(unittest.TestCase):
         self.assertTrue(len(lines) >= 1)
         entry = lines[-1]
         self.assertEqual(entry["action"], "screenshot")
-        self.assertEqual(entry["permission_level"], "READ")
+        self.assertEqual(entry["permission_level"], "SAFE")
         self.assertIn("[REDACTED_KEY]", entry["details"])
         self.assertEqual(entry["result"], "EXECUTED (safe)")
         self.assertIn("timestamp", entry)

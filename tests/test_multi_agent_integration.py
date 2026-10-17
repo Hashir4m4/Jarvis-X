@@ -48,6 +48,7 @@ class TestMultiAgentIntegration(unittest.IsolatedAsyncioTestCase):
             self.state_updates.append(payload)
 
         self.security = SecurityProxy(self.config)
+        self.security.confirmation_callback = lambda a, d: True
         self.agent_manager = AgentManager(
             llm=self.mock_llm,
             security=self.security,

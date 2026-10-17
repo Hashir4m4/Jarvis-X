@@ -1,4 +1,4 @@
-import asyncio
+﻿import asyncio
 import logging
 import time
 from typing import Dict, Any, List, Optional
@@ -10,7 +10,8 @@ from .models import (
 import heapq
 from .monitors import MonitorRegistry
 from .storage import ProactiveStorage
-from .decision import ProactiveDecisionEngine, DecisionAction
+from backend.orchestrator.decision_engine import DecisionEngine, DecisionAction
+from backend.core.models import UserInput, InputChannel
 from .scheduler import ProactiveScheduler
 import asyncio
 
@@ -29,16 +30,8 @@ class ProactiveEngine:
     - EventBus publisher for HUD alerts and TTS speech requests.
     """
 
-    def __init__(
-        self,
-        event_bus: Optional[Any] = None,
-        monitor_registry: Optional[MonitorRegistry] = None,
-        storage: Optional[ProactiveStorage] = None,
-        config: Optional[Dict[str, Any]] = None,
-        memory_system=None,
-        task_planner=None,
-        execution_engine=None
-    ):
+    def __init__(self, event_bus=None, monitor_registry=None, storage=None, config=None, memory_system=None, task_planner=None, execution_engine=None, security_proxy=None, orchestrator=None, decision_engine=None):
+
         self.event_bus = event_bus
         self.monitors = monitor_registry or MonitorRegistry(event_bus=self.event_bus)
         self.storage = storage or ProactiveStorage()
@@ -46,7 +39,9 @@ class ProactiveEngine:
         self.memory = memory_system
         self.task_planner = task_planner
         self.execution_engine = execution_engine
-        self.decision_engine = ProactiveDecisionEngine(task_planner, execution_engine)
+        self.decision_engine = decision_engine or DecisionEngine()
+        self.security_proxy = security_proxy
+        self.orchestrator = orchestrator
         self.scheduler = ProactiveScheduler(event_bus)
 
         self.notification_mode: NotificationMode = NotificationMode.NORMAL
@@ -58,7 +53,7 @@ class ProactiveEngine:
         self._reminder_loop_task: Optional[asyncio.Task] = None
         self._is_user_busy: bool = False
         self._acknowledged_sources: set = set()
-        
+
         # Telemetry
         self.stats = {
             "events_detected": 0,
@@ -66,7 +61,7 @@ class ProactiveEngine:
             "events_notified": 0,
             "events_acknowledged": 0
         }
-        
+
         # Priority Queue for notifications
         self._notification_queue: List[tuple] = []
         self._queue_lock = asyncio.Lock()
@@ -190,9 +185,9 @@ class ProactiveEngine:
             reminders=self.reminders
         )
 
-    # ─────────────────────────────────────────────────────────────
+    # â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     # Notification & Quiet Mode Governance
-    # ─────────────────────────────────────────────────────────────
+    # â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     def set_notification_mode(self, mode: NotificationMode):
         self.notification_mode = mode
@@ -218,7 +213,7 @@ class ProactiveEngine:
     def _calculate_importance_score(self, event: JarvisEvent, rule: ConditionRule, spam_count: int) -> int:
         """Context Evaluator: Calculates an importance score from 0 (Ignore) to 5 (Critical)."""
         score = 1
-        
+
         # Base priority weight
         if rule.priority == EventPriority.CRITICAL:
             score = 5
@@ -228,22 +223,22 @@ class ProactiveEngine:
             score = 3
         elif rule.priority == EventPriority.MEDIUM:
             score = 2
-            
+
         # Frequency weight (high frequency implies importance if it persists)
         if spam_count > 5 and score < 4:
             score += 1
-            
+
         # Context weight
         if self._is_user_busy and score < 4:
             # Suppress non-critical alerts when busy
             score -= 1
-            
+
         # Ensure bounds
         return max(0, min(5, score))
 
-    # ─────────────────────────────────────────────────────────────
+    # â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     # Event Ingestion & Evaluation Pipeline
-    # ─────────────────────────────────────────────────────────────
+    # â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     async def handle_event(self, event_data: Dict[str, Any]) -> Optional[ProactiveNotification]:
         """
@@ -263,9 +258,9 @@ class ProactiveEngine:
         except Exception as e:
             logger.debug(f"[PROACTIVE_ENGINE] Malformed event dropped: {e}")
             return None
-            
+
         self.stats["events_detected"] += 1
-        
+
         # If source is acknowledged, suppress
         if event.source in self._acknowledged_sources:
             self.stats["events_suppressed"] += 1
@@ -275,7 +270,7 @@ class ProactiveEngine:
         event_signature = f"{event.source}:{event.payload.get('metric') or event.payload.get('service')}:{event.payload.get('percent') or event.payload.get('status')}"
         now = time.time()
         last_seen = self._last_event_hashes.get(event_signature, 0.0)
-        
+
         self._event_spam_counts[event_signature] = self._event_spam_counts.get(event_signature, 0) + 1
         spam_count = self._event_spam_counts[event_signature]
 
@@ -296,7 +291,7 @@ class ProactiveEngine:
 
                 rule.last_triggered_at = now
                 self.save_state()
-                
+
                 # Context Evaluator: Importance Scoring
                 importance_score = self._calculate_importance_score(event, rule, spam_count)
                 event.importance_score = importance_score
@@ -309,7 +304,7 @@ class ProactiveEngine:
                         formatted_msg = rule.notification_template.format(**event.payload)
                     except Exception:
                         formatted_msg = rule.name
-                
+
                 # Check quiet mode delivery policy
                 if not self.should_deliver(rule.priority) or importance_score < 1:
                     logger.info(f"[PROACTIVE_ENGINE] Notification '{rule.name}' suppressed by mode or low importance.")
@@ -327,24 +322,33 @@ class ProactiveEngine:
                     source_rule_id=rule.rule_id,
                     timestamp=now
                 )
-                
+
                 # Decision Engine
                 decision = self.decision_engine.evaluate(event, rule.proactive_suggestion)
-                
-                if decision == DecisionAction.EXECUTE and self.task_planner and self.execution_engine:
+
+                if decision == DecisionAction.EXECUTE and self.orchestrator:
                     goal = rule.proactive_suggestion or f"Address {rule.name}"
-                    plan = self.task_planner.create_plan(goal)
-                    if plan:
-                        asyncio.create_task(self.execution_engine.execute_plan(plan))
-                        notif.message += " [Auto-Executing]"
-                        if self.memory:
-                            await self.memory.add_memory(f"Proactively executing: {goal}")
+                    logger.info(f"[PROACTIVE_ENGINE] Routing proactive event execution via orchestrator for source: {event.source}")
+                    # Wrap in UserInput and submit to Orchestrator
+                    user_input = UserInput(
+                        content=f"PROACTIVE_EVENT: {event.payload.get('message', event.source)} | SUGGESTION: {goal}",
+                        channel=InputChannel.SCHEDULED,
+                        metadata={
+                            "proactive": True,
+                            "source": event.source,
+                            "importance": importance_score,
+                            "event_data": event.payload
+                        }
+                    )
+                    # Dispatch async so we don't block the engine loop
+                    asyncio.create_task(self.orchestrator.process_request(user_input))
+                    notif.message += " [Auto-Executing]"
                 elif decision == DecisionAction.ASK_CONFIRMATION:
                     notif.message += " [Requires Confirmation]"
                     event.state = EventState.NOTIFIED
-                
+
                 if self.memory and importance_score >= 3:
-                    await self.memory.add_memory(f"Proactive Alert: {formatted_msg}")
+                    self.memory.write_memory(f"Proactive Alert: {formatted_msg}", memory_type="proactive")
 
                 # Broadcast notification to Queue
 
@@ -355,7 +359,7 @@ class ProactiveEngine:
                 return notif
 
         return None
-        
+
     def acknowledge_event(self, source: str):
         """Acknowledges an event source, suppressing future similar events."""
         self._acknowledged_sources.add(source)
@@ -370,7 +374,7 @@ class ProactiveEngine:
                 async with self._queue_lock:
                     if self._notification_queue:
                         _, _, notif = heapq.heappop(self._notification_queue)
-                
+
                 if notif:
                     await self._dispatch_notification(notif)
                     # Simple rate limit cooldown after dispatch
@@ -382,7 +386,7 @@ class ProactiveEngine:
             except Exception as e:
                 logger.error(f"[PROACTIVE_ENGINE] Queue processor error: {e}")
                 await asyncio.sleep(1.0)
-                
+
     async def _dispatch_notification(self, notif: ProactiveNotification):
         """Emits notification to the EventBus for HUD rendering and Voice synthesis."""
         if self.event_bus:
@@ -398,9 +402,9 @@ class ProactiveEngine:
             except Exception as e:
                 logger.debug(f"[PROACTIVE_ENGINE] Notification dispatch error: {e}")
 
-    # ─────────────────────────────────────────────────────────────
+    # â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     # Reminder Engine
-    # ─────────────────────────────────────────────────────────────
+    # â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     def add_reminder(
         self,
@@ -469,9 +473,9 @@ class ProactiveEngine:
                 logger.debug(f"[PROACTIVE_ENGINE] Reminder loop error: {e}")
                 await asyncio.sleep(5.0)
 
-    # ─────────────────────────────────────────────────────────────
+    # â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     # Lifecycle Management
-    # ─────────────────────────────────────────────────────────────
+    # â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     async def start(self):
         """Starts Proactive Engine services and registers EventBus listener."""
@@ -513,11 +517,9 @@ class ProactiveEngine:
                 self._is_user_busy = True
             elif status in ("COMPLETED", "FAILED", "CANCELLED", "AWAITING_APPROVAL"):
                 self._is_user_busy = False
-                
+
             task_monitor = self.monitors.get_monitor("task_monitor")
             if task_monitor and task_monitor.enabled:
                 evt = task_monitor.handle_task_event(data)
                 if evt:
                     await self.handle_event(evt.to_dict())
-
-

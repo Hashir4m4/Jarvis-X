@@ -57,7 +57,7 @@ class TestProactiveEngine(unittest.IsolatedAsyncioTestCase):
             condition_type="equals",
             target_key="test_busy",
             threshold_value=True,
-            priority=EventPriority.MEDIUM,
+            priority=EventPriority.LOW,
             cooldown_seconds=0
         ))
         event_data_2 = {
@@ -67,7 +67,7 @@ class TestProactiveEngine(unittest.IsolatedAsyncioTestCase):
             "payload": {"test_busy": True}
         }
         notif_busy = await self.engine.handle_event(event_data_2)
-        # Should be suppressed because score goes from 2 -> 1, and < 2 is suppressed
+        # Should be suppressed because score goes from 1 -> 0, and < 1 is suppressed
         self.assertIsNone(notif_busy)
 
     async def test_03_deduplication(self):

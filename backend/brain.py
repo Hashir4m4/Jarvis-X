@@ -1,3 +1,4 @@
+from backend.plugins.plugin_manager import PluginManager
 import logging
 from typing import Dict, Any, Generator
 from .llm_client import LLMClient
@@ -65,6 +66,9 @@ class Brain:
         self.input_ctrl = InputController()
         self.terminal = TerminalExecutor()
 
+        self.plugin_manager = PluginManager(core_config=config, security_proxy=self.security)
+        self.plugin_manager.discover_and_load()
+
         logger.info(f"Jarvis Brain initialized. Session: {session_id}, Model: {self.llm.model}")
 
     def _parse_tool_call(self, text: str) -> tuple:
@@ -123,6 +127,10 @@ class Brain:
 
         entry = dispatch.get(tool_name)
         if not entry:
+            if hasattr(self, 'plugin_manager') and self.plugin_manager:
+                result = self.plugin_manager.execute_tool(tool_name, kwargs)
+                if result is not None:
+                    return str(result)
             return f"Unknown tool: {tool_name}"
 
         action_tag, func = entry

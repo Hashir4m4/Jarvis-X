@@ -16,7 +16,7 @@ class ResourceManager:
     def _detect_ram_gb(self) -> float:
         try:
             mem = psutil.virtual_memory()
-            return mem.available / (1024 ** 3)
+            return float(mem.available / (1024 ** 3))
         except Exception as e:
             logger.warning(f"Failed to detect RAM: {e}")
             return 0.0
