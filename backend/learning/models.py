@@ -36,3 +36,40 @@ class LearningRecord:
     created_at: float = field(default_factory=time.time)
     updated_at: float = field(default_factory=time.time)
     inferred: bool = True
+
+
+class ImprovementCategory(str, Enum):
+    WORKFLOW_RELIABILITY = "WORKFLOW_RELIABILITY"
+    PLANNING_ACCURACY = "PLANNING_ACCURACY"
+    CODE_QUALITY = "CODE_QUALITY"
+    RESOURCE_EFFICIENCY = "RESOURCE_EFFICIENCY"
+    USER_EXPERIENCE = "USER_EXPERIENCE"
+
+
+@dataclass
+class ImprovementRecommendation:
+    """Actionable improvement recommendation generated from observed telemetry and outcomes."""
+    recommendation_id: str = field(default_factory=lambda: f"imp_{uuid.uuid4().hex[:8]}")
+    category: ImprovementCategory = ImprovementCategory.WORKFLOW_RELIABILITY
+    title: str = ""
+    description: str = ""
+    expected_benefit: str = ""
+    risk_level: str = "LOW"
+    confidence: float = 0.8
+    evidence: List[str] = field(default_factory=list)
+    requires_approval: bool = True
+    created_at: float = field(default_factory=time.time)
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "recommendation_id": self.recommendation_id,
+            "category": self.category.value,
+            "title": self.title,
+            "description": self.description,
+            "expected_benefit": self.expected_benefit,
+            "risk_level": self.risk_level,
+            "confidence": round(self.confidence, 2),
+            "evidence": list(self.evidence),
+            "requires_approval": self.requires_approval,
+            "created_at": self.created_at,
+        }

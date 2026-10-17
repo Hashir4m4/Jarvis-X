@@ -15,7 +15,7 @@
       "enabled": true,
       "privacy_level": "LOCAL_ONLY",
       "status": "ERROR",
-      "last_poll_time": 1790784495.3255918,
+      "last_poll_time": 1792257726.1888814,
       "error_message": "'<' not supported between instances of 'MagicMock' and 'int'"
     },
     "disk_monitor": {
@@ -32,7 +32,7 @@
       "enabled": true,
       "privacy_level": "LOCAL_ONLY",
       "status": "ACTIVE",
-      "last_poll_time": 1790784495.3312964,
+      "last_poll_time": 1792257726.1956277,
       "error_message": null
     },
     "system_monitor": {
@@ -49,7 +49,7 @@
       "enabled": true,
       "privacy_level": "LOCAL_ONLY",
       "status": "ERROR",
-      "last_poll_time": 1790784495.3404715,
+      "last_poll_time": 1792257726.3177152,
       "error_message": "'>' not supported between instances of 'MagicMock' and 'int'"
     },
     "model_server_monitor": {
@@ -67,7 +67,7 @@
       "enabled": true,
       "privacy_level": "LOCAL_ONLY",
       "status": "ACTIVE",
-      "last_poll_time": 1790784497.3552325,
+      "last_poll_time": 1792257727.5191061,
       "error_message": null
     },
     "task_monitor": {
@@ -115,7 +115,7 @@
       "notification_template": "Disk space is critically low ({pct_free}% free on {path}).",
       "proactive_suggestion": "I can help scan for temporary files and large caches.",
       "enabled": true,
-      "last_triggered_at": 1790784497.3660433
+      "last_triggered_at": 1792257727.5317256
     },
     {
       "rule_id": "rule_local_ai_offline",
@@ -129,7 +129,7 @@
       "notification_template": "Local AI model server (Ollama) appears to be offline.",
       "proactive_suggestion": "Would you like me to diagnose local server connectivity?",
       "enabled": true,
-      "last_triggered_at": 1790784497.3701663
+      "last_triggered_at": 1792249404.0553408
     },
     {
       "rule_id": "rule_task_completed",

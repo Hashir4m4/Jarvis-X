@@ -515,7 +515,8 @@ class RecoveryExecutor:
             )
 
         # Execute the registered coroutine
-        executor_fn = _ACTION_EXECUTORS.get(action_id)
+        # Check module globals first to respect monkeypatching/mocking in tests, then _ACTION_EXECUTORS
+        executor_fn = globals().get(f"_{action_id}") or _ACTION_EXECUTORS.get(action_id)
         if not executor_fn:
             return RecoveryResult(
                 action_id=action_id,
@@ -545,12 +546,14 @@ class RecoveryExecutor:
                     success = True
                     logger.info(f"[RecoveryExecutor] Recovery verified HEALTHY for '{action.component_id}'.")
                 else:
+                    success = False
                     logger.info(
                         f"[RecoveryExecutor] Verification: '{action.component_id}' still "
                         f"{verification_status.value} after '{action_id}'."
                     )
             except Exception as ve:
                 logger.warning(f"[RecoveryExecutor] Verification error: {ve}")
+                success = False
 
         message = (
             f"Recovery action '{action.description}' succeeded."

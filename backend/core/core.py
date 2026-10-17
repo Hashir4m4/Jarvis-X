@@ -43,6 +43,41 @@ class JarvisCore:
         self.learning_engine = self.container.learning_engine
         self.goal_engine = getattr(self.container, "goal_engine", None)
         self.goal_decomposition_engine = getattr(self.container, "goal_decomposition_engine", None)
+        self.planning_engine = getattr(self.container, "planning_engine", None)
+        self.adaptive_planning = getattr(self.container, "adaptive_planning", None)
+        self.workflow_converter = getattr(self.container, "workflow_converter", None)
+        self.workflow_engine = getattr(self.container, "workflow_engine", None)
+        self.priority_engine = getattr(self.container, "priority_engine", None)
+        self.project_intelligence = getattr(self.container, "project_intelligence", None)
+        self.code_analysis_engine = getattr(self.container, "code_analysis_engine", None)
+        self.code_modification_engine = getattr(self.container, "code_modification_engine", None)
+        self.debugging_engine = getattr(self.container, "debugging_engine", None)
+        self.control_framework = getattr(self.container, "control_framework", None)
+        self.notification_service = getattr(self.container, "notification_service", None)
+        self.system_visualization = getattr(self.container, "system_visualization", None)
+        self.hud_service = getattr(self.container, "hud_service", None)
+        if self.hud_service:
+            self.hud_service.core = self
+        self.command_center = getattr(self.container, "command_center", None)
+        if self.command_center:
+            self.command_center.core = self
+        self.multimodal_orchestrator = getattr(self.container, "multimodal_orchestrator", None)
+        if self.multimodal_orchestrator:
+            self.multimodal_orchestrator.core = self
+        self.workspace_intelligence = getattr(self.container, "workspace_intelligence", None)
+        self.ambient_intelligence = getattr(self.container, "ambient_intelligence", None)
+        self.connector_registry = getattr(self.container, "connector_registry", None)
+        self.smarthome_service = getattr(self.container, "smarthome_service", None)
+        self.iot_service = getattr(self.container, "iot_service", None)
+        self.hardware_control = getattr(self.container, "hardware_control", None)
+        self.mobile_companion = getattr(self.container, "mobile_companion", None)
+        self.sync_engine = getattr(self.container, "sync_engine", None)
+        self.remote_gateway = getattr(self.container, "remote_gateway", None)
+        self.personal_cloud = getattr(self.container, "personal_cloud", None)
+        self.marketplace = getattr(self.container, "marketplace", None)
+        self.research_lab = getattr(self.container, "research_lab", None)
+        if self.research_lab:
+            self.research_lab.core = self
         self.voice_manager = None
         self.plugin_manager = None
         self.diagnostics_engine = None
@@ -62,7 +97,11 @@ class JarvisCore:
 
         self.skill_registry.register(SystemSkill())
         self.skill_registry.register(MetricsSkill())
-        self.skill_registry.register(PlanSkill())
+        self.skill_registry.register(PlanSkill(
+            planner=self.task_planner,
+            planning_engine=self.planning_engine,
+            adaptive_planning=self.adaptive_planning
+        ))
         self.skill_registry.register(CodingSkill())
         self.skill_registry.register(VaultSkill())
         self.skill_registry.register(InboxSkill())
@@ -92,6 +131,11 @@ class JarvisCore:
             await self.proactive_engine.start()
         if hasattr(self, 'learning_engine') and self.learning_engine:
             await self.learning_engine.start()
+        if self.adaptive_planning and hasattr(self.adaptive_planning, "start_monitoring"):
+            try:
+                self.adaptive_planning.start_monitoring()
+            except Exception as e:
+                logger.warning(f"Failed to start adaptive planning monitoring: {e}")
         logger.info("JARVIS Core is ONLINE.")
 
     async def _handle_voice_speak_event(self, event_type: str, data: Any):
@@ -102,6 +146,11 @@ class JarvisCore:
 
     async def stop(self):
         self._running = False
+        if self.adaptive_planning and hasattr(self.adaptive_planning, "stop_monitoring"):
+            try:
+                self.adaptive_planning.stop_monitoring()
+            except Exception as e:
+                logger.warning(f"Failed to stop adaptive planning monitoring: {e}")
         if self.proactive_engine:
             await self.proactive_engine.stop()
         if self.plugin_manager:
@@ -179,3 +228,279 @@ class JarvisCore:
             channel = InputChannel(data.get("channel", "text"))
             user_in = UserInput(content=content, channel=channel, metadata=data)
             await self.process_input(user_in)
+
+    # ─────────────────────────────────────────────────────────────
+    # Application-Level Long-Horizon & Adaptive Planning Methods
+    # ─────────────────────────────────────────────────────────────
+
+    def create_long_horizon_plan(
+        self,
+        goal_id: str,
+        title: Optional[str] = None,
+        author: str = "User",
+        deadline: Optional[str] = None,
+    ):
+        """Creates and persists a long-horizon strategic plan for an approved goal."""
+        if not self.planning_engine:
+            raise RuntimeError("LongHorizonPlanningEngine is not initialized.")
+        return self.planning_engine.create_plan(goal_id=goal_id, title=title, author=author, deadline=deadline)
+
+    def get_plan(self, plan_id: str):
+        """Retrieves a strategic plan by ID."""
+        if not self.planning_engine:
+            raise RuntimeError("LongHorizonPlanningEngine is not initialized.")
+        return self.planning_engine.get_plan(plan_id)
+
+    def list_plans(self, status: Optional[str] = None):
+        """Lists strategic plans, optionally filtered by status."""
+        if not self.planning_engine:
+            raise RuntimeError("LongHorizonPlanningEngine is not initialized.")
+        return self.planning_engine.list_plans(status=status)
+
+    def submit_plan_for_approval(self, plan_id: str, author: str = "User"):
+        """Submits a draft plan for human review and approval."""
+        if not self.planning_engine:
+            raise RuntimeError("LongHorizonPlanningEngine is not initialized.")
+        return self.planning_engine.submit_for_approval(plan_id=plan_id, author=author)
+
+    def approve_plan(self, plan_id: str, reviewer: str = "User"):
+        """Approves a proposed strategic plan."""
+        if not self.planning_engine:
+            raise RuntimeError("LongHorizonPlanningEngine is not initialized.")
+        return self.planning_engine.approve_plan(plan_id=plan_id, reviewer=reviewer)
+
+    def reject_plan(self, plan_id: str, reviewer: str = "User", reason: str = ""):
+        """Rejects a proposed strategic plan."""
+        if not self.planning_engine:
+            raise RuntimeError("LongHorizonPlanningEngine is not initialized.")
+        return self.planning_engine.reject_plan(plan_id=plan_id, reviewer=reviewer, reason=reason)
+
+    def activate_plan(self, plan_id: str, user: str = "User"):
+        """Activates an approved strategic plan."""
+        if not self.planning_engine:
+            raise RuntimeError("LongHorizonPlanningEngine is not initialized.")
+        return self.planning_engine.activate_plan(plan_id=plan_id, user=user)
+
+    def get_critical_path(self, plan_id: str):
+        """Computes and returns the critical path for a strategic plan."""
+        if not self.planning_engine:
+            raise RuntimeError("LongHorizonPlanningEngine is not initialized.")
+        return self.planning_engine.get_critical_path(plan_id=plan_id)
+
+    def assess_plan_adaptation(self, trigger):
+        """Evaluates whether an active plan requires adaptation."""
+        if not self.adaptive_planning:
+            raise RuntimeError("AdaptivePlanningSubsystem is not initialized.")
+        return self.adaptive_planning.process_trigger(trigger)
+
+    def propose_plan_revision(self, plan_id: str, author: str = "JARVIS", reason: str = ""):
+        """Generates a candidate revision and structural diff without mutating the baseline."""
+        if not self.adaptive_planning:
+            raise RuntimeError("AdaptivePlanningSubsystem is not initialized.")
+        from backend.planning.adaptive_planning import PlanStructuralDiff
+        baseline = self.get_plan(plan_id)
+        candidate = self.adaptive_planning.propose_revision(plan_id=plan_id, author=author, reason=reason)
+        diff = PlanStructuralDiff.compute(baseline=baseline, candidate=candidate)
+        return candidate, diff
+
+    def approve_plan_revision(self, plan_id: str, reviewer: str = "User"):
+        """Approves a proposed revision and atomically updates the baseline."""
+        if not self.adaptive_planning:
+            raise RuntimeError("AdaptivePlanningSubsystem is not initialized.")
+        return self.adaptive_planning.approve_revision(plan_id=plan_id, reviewer=reviewer)
+
+    def reject_plan_revision(self, plan_id: str, reviewer: str = "User", reason: str = ""):
+        """Rejects a proposed revision, keeping the existing baseline intact."""
+        if not self.adaptive_planning:
+            raise RuntimeError("AdaptivePlanningSubsystem is not initialized.")
+        return self.adaptive_planning.reject_revision(plan_id=plan_id, reviewer=reviewer, reason=reason)
+
+    def get_plan_revision_history(self, plan_id: str):
+        """Retrieves immutable revision history snapshots for a plan."""
+        if not self.adaptive_planning:
+            raise RuntimeError("AdaptivePlanningSubsystem is not initialized.")
+        return self.adaptive_planning.get_revision_history(plan_id=plan_id)
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Workflow Execution APIs (Prompt 58)
+    # ─────────────────────────────────────────────────────────────────────────
+    def convert_plan_to_workflow(self, plan_id: str):
+        """Converts an approved long-horizon plan into an executable workflow without executing it."""
+        if not self.workflow_converter:
+            raise RuntimeError("Workflow converter is not configured.")
+        plan = self.get_plan(plan_id)
+        if not plan:
+            raise ValueError(f"Plan '{plan_id}' does not exist.")
+        return self.workflow_converter.convert(plan)
+
+    def authorize_workflow_execution(self, execution, authorizer: str = "User"):
+        """Validates execution authorization against SecurityProxy."""
+        if not self.workflow_engine:
+            raise RuntimeError("Workflow execution engine is not configured.")
+        return self.workflow_engine.authorize_execution(execution, authorizer=authorizer)
+
+    def execute_workflow(self, workflow, execution):
+        """Executes an authorized workflow."""
+        if not self.workflow_engine:
+            raise RuntimeError("Workflow execution engine is not configured.")
+        return self.workflow_engine.execute_workflow(workflow, execution)
+
+    def cancel_workflow_execution(self, execution_id: str, reason: str = "User requested cancellation"):
+        """Signals cancellation to an active workflow execution."""
+        if not self.workflow_engine:
+            raise RuntimeError("Workflow execution engine is not configured.")
+        return self.workflow_engine.cancel_execution(execution_id, reason=reason)
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Priority Intelligence APIs (Prompt 59)
+    # ─────────────────────────────────────────────────────────────────────────
+    def evaluate_item_priority(self, goal):
+        """Calculates an explainable multi-factor priority score."""
+        if not self.priority_engine:
+            raise RuntimeError("Priority engine is not configured.")
+        return self.priority_engine.evaluate_goal_priority(goal)
+
+    def set_priority_override(self, item_id: str, item_type, level, reason: str, author: str = "User"):
+        """Records an explicit human override fixing the priority level."""
+        if not self.priority_engine:
+            raise RuntimeError("Priority engine is not configured.")
+        return self.priority_engine.set_user_override(
+            item_id=item_id,
+            item_type=item_type,
+            level=level,
+            reason=reason,
+            author=author,
+        )
+
+    def get_priority_recommendations(self):
+        """Generates ranked scheduling recommendations across active goals and tasks."""
+        if not self.priority_engine:
+            raise RuntimeError("Priority engine is not configured.")
+        return self.priority_engine.get_schedule_recommendations()
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Project Intelligence APIs (Prompt 60)
+    # ─────────────────────────────────────────────────────────────────────────
+    def register_personal_project(self, name: str, description: str = "", repository_path: str = None, linked_goal_ids=None):
+        """Registers a personal engineering project with linked goal provenance."""
+        if not self.project_intelligence:
+            raise RuntimeError("Project intelligence is not configured.")
+        return self.project_intelligence.register_project(
+            name=name,
+            description=description,
+            repository_path=repository_path,
+            linked_goal_ids=linked_goal_ids,
+        )
+
+    def get_project_status(self, project_id: str):
+        """Synthesizes structured project status, blockers, and architectural decisions."""
+        if not self.project_intelligence:
+            raise RuntimeError("Project intelligence is not configured.")
+        return self.project_intelligence.analyze_project_status(project_id)
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Code Analysis APIs (Prompt 61)
+    # ─────────────────────────────────────────────────────────────────────────
+    def analyze_codebase(self, root_dir: str, max_files: int = 50):
+        """Executes autonomous read-only static analysis over code files."""
+        if not self.code_analysis_engine:
+            raise RuntimeError("Code analysis engine is not configured.")
+        return self.code_analysis_engine.analyze_directory(root_dir=root_dir, max_files=max_files)
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Code Modification APIs (Prompt 62)
+    # ─────────────────────────────────────────────────────────────────────────
+    def propose_code_patch(self, file_path: str, new_content: str, rationale: str, author: str = "JARVIS"):
+        """Validates syntax and creates a unified diff patch proposal."""
+        if not self.code_modification_engine:
+            raise RuntimeError("Code modification engine is not configured.")
+        return self.code_modification_engine.propose_patch(
+            file_path=file_path,
+            new_content=new_content,
+            rationale=rationale,
+            author=author,
+        )
+
+    def approve_code_patch(self, proposal_id: str, approver: str = "User"):
+        """Authorizes a patch proposal via SecurityProxy."""
+        if not self.code_modification_engine:
+            raise RuntimeError("Code modification engine is not configured.")
+        return self.code_modification_engine.approve_patch(proposal_id=proposal_id, approver=approver)
+
+    def apply_code_patch(self, proposal_id: str):
+        """Applies an authorized patch to disk, preserving rollback snapshot."""
+        if not self.code_modification_engine:
+            raise RuntimeError("Code modification engine is not configured.")
+        return self.code_modification_engine.apply_patch(proposal_id=proposal_id)
+
+    def rollback_code_patch(self, proposal_id: str):
+        """Restores file to its pre-modification state."""
+        if not self.code_modification_engine:
+            raise RuntimeError("Code modification engine is not configured.")
+        return self.code_modification_engine.rollback_patch(proposal_id=proposal_id)
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Intelligent Debugging APIs (Prompt 63)
+    # ─────────────────────────────────────────────────────────────────────────
+    def diagnose_error(self, exc: Exception, affected_component: str = None, context: dict = None):
+        """Analyzes an exception, sanitizes traces, and formulates evidence-backed hypotheses."""
+        if not self.debugging_engine:
+            raise RuntimeError("Debugging engine is not configured.")
+        return self.debugging_engine.diagnose_exception(
+            exc=exc,
+            affected_component=affected_component,
+            context=context,
+        )
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Continuous Improvement APIs (Prompt 64)
+    # ─────────────────────────────────────────────────────────────────────────
+    def get_improvement_recommendations(self):
+        """Synthesizes actionable improvement recommendations from observed telemetry and learnings."""
+        if not self.learning_engine:
+            raise RuntimeError("Learning engine is not configured.")
+        return self.learning_engine.generate_improvement_recommendations()
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # Human-in-the-Loop Autonomous Control Framework APIs (Prompt 65)
+    # ─────────────────────────────────────────────────────────────────────────
+    def request_autonomous_action_approval(
+        self,
+        action_type: str,
+        subsystem: str,
+        risk_tier,
+        description: str,
+        parameters: dict,
+        target_resource: str = None,
+        timeout_seconds: float = 300.0,
+    ):
+        """Requests unified human approval bound to a cryptographic payload hash."""
+        if not self.control_framework:
+            raise RuntimeError("Control framework is not configured.")
+        return self.control_framework.request_approval(
+            action_type=action_type,
+            subsystem=subsystem,
+            risk_tier=risk_tier,
+            description=description,
+            parameters=parameters,
+            target_resource=target_resource,
+            timeout_seconds=timeout_seconds,
+        )
+
+    def approve_autonomous_action(self, request_id: str, approver: str = "User"):
+        """Approves a pending unified approval request."""
+        if not self.control_framework:
+            raise RuntimeError("Control framework is not configured.")
+        return self.control_framework.approve_request(request_id=request_id, approver=approver)
+
+    def trigger_emergency_stop(self, reason: str = "Operator triggered emergency stop"):
+        """Immediately engages global emergency stop halting autonomous work."""
+        if not self.control_framework:
+            raise RuntimeError("Control framework is not configured.")
+        self.control_framework.trigger_emergency_stop(reason=reason)
+
+    def clear_emergency_stop(self, authorizer: str = "User"):
+        """Disengages global emergency stop."""
+        if not self.control_framework:
+            raise RuntimeError("Control framework is not configured.")
+        self.control_framework.clear_emergency_stop(authorizer=authorizer)

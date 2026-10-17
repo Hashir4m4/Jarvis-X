@@ -103,6 +103,52 @@ async def execute_command(payload: CommandPayload):
     return {"status": "error", "message": "JARVIS Core not initialized"}
 
 
+@app.get("/api/hud/snapshot")
+async def get_hud_snapshot():
+    """Returns aggregated HUD 2.0 system state snapshot."""
+    if jarvis_core and hasattr(jarvis_core, "hud_service") and jarvis_core.hud_service:
+        return jarvis_core.hud_service.get_snapshot().to_dict()
+    return {"status": "error", "message": "HUD service unavailable"}
+
+
+@app.get("/api/hud/preferences")
+async def get_hud_preferences():
+    """Returns HUD 2.0 layout and theme preferences."""
+    if jarvis_core and hasattr(jarvis_core, "hud_service") and jarvis_core.hud_service:
+        return jarvis_core.hud_service.preferences.to_dict()
+    return {"theme": "cyan_neon", "widgets": []}
+
+
+@app.get("/api/notifications")
+async def list_notifications(limit: int = 50):
+    """Returns recent intelligent notifications."""
+    if jarvis_core and hasattr(jarvis_core, "notification_service") and jarvis_core.notification_service:
+        return [n.to_dict() for n in jarvis_core.notification_service.get_history(limit=limit)]
+    return []
+
+
+@app.get("/api/workspace/context")
+async def get_workspace_context():
+    """Returns indexed workspace context metadata."""
+    if jarvis_core and hasattr(jarvis_core, "workspace_intelligence") and jarvis_core.workspace_intelligence:
+        report = jarvis_core.workspace_intelligence.scan_and_index()
+        return report.to_dict()
+    return {"status": "workspace_intelligence_unconfigured"}
+
+
+@app.get("/api/ambient/status")
+async def get_ambient_status():
+    """Returns ambient intelligence mode operating state and suggestions."""
+    if jarvis_core and hasattr(jarvis_core, "ambient_intelligence") and jarvis_core.ambient_intelligence:
+        amb = jarvis_core.ambient_intelligence
+        return {
+            "mode": amb.mode.value,
+            "enabled": amb.config.enabled,
+            "suggestions": [s.to_dict() for s in amb.get_recent_suggestions()]
+        }
+    return {"mode": "DISABLED", "enabled": False, "suggestions": []}
+
+
 @app.on_event("startup")
 async def startup_event():
     # Start JARVIS Core / Kernel

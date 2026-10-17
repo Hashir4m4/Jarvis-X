@@ -1,0 +1,46 @@
+---
+title: Robotics Lab Expansion
+goal_id: goal_6feecb6f
+type: goal_record
+goal_type: LONG_TERM
+status: ACTIVE
+progress: 0.0
+parent_goal_id: null
+target_date: null
+subgoal_count: 0
+task_count: 0
+created_at: 1792238865.9741023
+updated_at: 1792238865.9741056
+---
+
+# Goal: Robotics Lab Expansion
+
+**Type:** `LONG_TERM` | **Status:** `ACTIVE` | **Progress:** `0.0%`
+
+## Description
+Expand assembly cells and install precision arms.
+
+## Completion Criteria
+- Standard verification.
+
+## Tasks
+- No atomic tasks attached.
+
+```json
+{
+  "goal_id": "goal_6feecb6f",
+  "title": "Robotics Lab Expansion",
+  "description": "Expand assembly cells and install precision arms.",
+  "goal_type": "LONG_TERM",
+  "status": "ACTIVE",
+  "parent_goal_id": null,
+  "subgoal_ids": [],
+  "tasks": [],
+  "created_at": 1792238865.9741023,
+  "updated_at": 1792238865.9741056,
+  "target_date": null,
+  "completion_criteria": [],
+  "metadata": {},
+  "progress": 0.0
+}
+```

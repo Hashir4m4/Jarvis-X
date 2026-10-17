@@ -26,6 +26,8 @@ from backend.router.central_router import CentralRouter
 from backend.learning.engine import LearningEngine
 from backend.goals.engine import GoalManagerEngine
 from backend.goals.decomposition import GoalDecompositionEngine
+from backend.planning.long_horizon_engine import LongHorizonPlanningEngine
+from backend.planning.adaptive_planning import AdaptivePlanningSubsystem
 
 
 logger = logging.getLogger("JARVIS.Container")
@@ -121,6 +123,67 @@ class AppContainer:
             config=self.config
         )
 
+        # 8.1 Long-Horizon & Adaptive Planning
+        self.planning_engine = LongHorizonPlanningEngine(
+            goal_engine=self.goal_engine,
+            memory_api=self.memory,
+            event_bus=self.kernel.event_bus,
+            security_proxy=self.security,
+            llm_client=getattr(self.brain, "llm", None),
+            config=self.config
+        )
+        self.adaptive_planning = AdaptivePlanningSubsystem(
+            planning_engine=self.planning_engine,
+            goal_engine=self.goal_engine,
+            event_bus=self.kernel.event_bus,
+            security_proxy=self.security,
+            config=self.config
+        )
+
+        # 8.2 Autonomous Workflow Execution (Prompt 58)
+        from backend.workflows.converter import PlanToWorkflowConverter
+        from backend.workflows.engine import WorkflowExecutionEngine
+        self.workflow_converter = PlanToWorkflowConverter(
+            capability_registry=self.skill_registry.capability_registry if hasattr(self.skill_registry, "capability_registry") else None
+        )
+        self.workflow_engine = WorkflowExecutionEngine(
+            skill_registry=self.skill_registry,
+            security_proxy=self.security,
+            event_bus=self.kernel.event_bus
+        )
+
+        # 8.3 Advanced Priority Management (Prompt 59)
+        from backend.priority.engine import PriorityEngine
+        self.priority_engine = PriorityEngine(
+            goal_engine=self.goal_engine,
+            planning_engine=self.planning_engine,
+            security_proxy=self.security
+        )
+
+        # 8.4 Personal Project Intelligence (Prompt 60)
+        from backend.project_intelligence.engine import ProjectIntelligenceEngine
+        self.project_intelligence = ProjectIntelligenceEngine(
+            goal_engine=self.goal_engine,
+            planning_engine=self.planning_engine,
+            memory_api=self.memory
+        )
+
+        # 8.5 Autonomous Code Analysis (Prompt 61)
+        from backend.code_intelligence.engine import CodeAnalysisEngine
+        self.code_analysis_engine = CodeAnalysisEngine()
+
+        # 8.6 Autonomous Code Modification (Prompt 62)
+        from backend.code_modification.engine import CodeModificationEngine
+        self.code_modification_engine = CodeModificationEngine(security_proxy=self.security)
+
+        # 8.7 Intelligent Debugging (Prompt 63)
+        from backend.debugging.engine import IntelligentDebuggingEngine
+        self.debugging_engine = IntelligentDebuggingEngine(code_modification_engine=self.code_modification_engine)
+
+        # 8.8 Human-in-the-Loop Autonomous Control Framework (Prompt 65)
+        from backend.control.framework import AutonomousControlFramework
+        self.control_framework = AutonomousControlFramework(security_proxy=self.security)
+
         self.central_router = CentralRouter(
             skill_registry=self.skill_registry,
             intent_router=self.intent_router,
@@ -166,3 +229,66 @@ class AppContainer:
             orchestrator=self.orchestrator,
             decision_engine=self.decision_engine
         )
+
+        # 11. Phase 5 Advanced JARVIS Experience Services (Prompts 66-74)
+        from backend.notifications.service import NotificationService
+        self.notification_service = NotificationService(event_bus=self.kernel.event_bus)
+
+        from backend.visualization.service import SystemVisualizationService
+        self.system_visualization = SystemVisualizationService()
+
+        from backend.hud.service import HUDService
+        self.hud_service = HUDService()
+
+        from backend.command_center.service import DesktopCommandCenter
+        self.command_center = DesktopCommandCenter(
+            control_framework=self.control_framework,
+            security_proxy=self.security
+        )
+
+        from backend.multimodal.orchestrator import MultimodalOrchestrator
+        self.multimodal_orchestrator = MultimodalOrchestrator()
+
+        from backend.workspace.service import WorkspaceIntelligenceService
+        self.workspace_intelligence = WorkspaceIntelligenceService(memory_api=self.memory)
+
+        from backend.ambient.service import AmbientIntelligenceService
+        self.ambient_intelligence = AmbientIntelligenceService(
+            notification_service=self.notification_service,
+            control_framework=self.control_framework
+        )
+
+        # 12. Phase 6 Connected Intelligence Ecosystem Services (Prompts 76-85)
+        from backend.connectors.registry import APIConnectorRegistry
+        self.connector_registry = APIConnectorRegistry()
+
+        from backend.smarthome.service import SmartHomeService
+        self.smarthome_service = SmartHomeService()
+
+        from backend.iot.service import IoTIntelligenceService
+        self.iot_service = IoTIntelligenceService()
+
+        from backend.hardware.service import HardwareControlService
+        self.hardware_control = HardwareControlService(
+            system_controller=self.tools.system_ctrl if hasattr(self.tools, "system_ctrl") else None,
+            control_framework=self.control_framework
+        )
+
+        from backend.mobile.service import MobileCompanionService
+        self.mobile_companion = MobileCompanionService()
+
+        from backend.sync.service import CrossDeviceSyncEngine
+        self.sync_engine = CrossDeviceSyncEngine()
+
+        from backend.remote.service import SecureRemoteAccessGateway
+        self.remote_gateway = SecureRemoteAccessGateway()
+
+        from backend.cloud.service import PersonalCloudService
+        self.personal_cloud = PersonalCloudService()
+
+        from backend.marketplace.service import ExtensionRegistryService
+        self.marketplace = ExtensionRegistryService()
+
+        # 13. Phase 7 Scientific Intelligence & Research Lab Mode (Prompts 86-100)
+        from backend.scientific.lab_mode import JarvisResearchLabMode
+        self.research_lab = JarvisResearchLabMode()

@@ -9,7 +9,7 @@
       "tts_notify": true,
       "created_at": 1788429630.8587492,
       "last_run": 1789189513.7116032,
-      "next_run": 1790818200.0,
+      "next_run": 1792287000.0,
       "run_count": 1,
       "description": "Morning brief and action items review"
     },
@@ -22,7 +22,7 @@
       "tts_notify": false,
       "created_at": 1788429630.8587549,
       "last_run": 1789189516.216855,
-      "next_run": 1790825400.0,
+      "next_run": 1792294200.0,
       "run_count": 1,
       "description": "Daily plan creation and alignment"
     },
@@ -35,7 +35,7 @@
       "tts_notify": false,
       "created_at": 1788429630.8587573,
       "last_run": 1789893001.2925837,
-      "next_run": 1790843400.0,
+      "next_run": 1792312200.0,
       "run_count": 3,
       "description": "Midday hardware and usage metrics pull"
     },
@@ -48,7 +48,7 @@
       "tts_notify": true,
       "created_at": 1788429630.858759,
       "last_run": 1789189521.4422755,
-      "next_run": 1790861400.0,
+      "next_run": 1792330200.0,
       "run_count": 2,
       "description": "Evening digest and interaction change log"
     },
@@ -59,7 +59,7 @@
       "schedule_value": 2.0,
       "enabled": true,
       "tts_notify": false,
-      "created_at": 1790784839.3321142,
+      "created_at": 1792258525.8898363,
       "last_run": null,
       "next_run": null,
       "run_count": 0,
@@ -73,9 +73,9 @@
       "enabled": true,
       "tts_notify": false,
       "created_at": 1790781589.5284178,
-      "last_run": null,
+      "last_run": 1792258156.007847,
       "next_run": null,
-      "run_count": 0,
+      "run_count": 3,
       "description": null
     },
     {
@@ -85,44 +85,14 @@
       "schedule_value": 60.0,
       "enabled": true,
       "tts_notify": false,
-      "created_at": 1790781420.144033,
-      "last_run": 1790781420.1518116,
+      "created_at": 1792258154.8213792,
+      "last_run": 1792258154.8298097,
       "next_run": null,
       "run_count": 1,
       "description": null
     }
   ],
   "history": [
-    {
-      "task_id": "test_job",
-      "command": "test_job",
-      "schedule_type": "interval",
-      "executed_at": 1789893494.8618355,
-      "status": "success",
-      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
-      "execution_time_ms": 6892.71,
-      "tts_notified": false
-    },
-    {
-      "task_id": "test_job",
-      "command": "test_job",
-      "schedule_type": "interval",
-      "executed_at": 1789893501.7809134,
-      "status": "success",
-      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
-      "execution_time_ms": 6863.37,
-      "tts_notified": false
-    },
-    {
-      "task_id": "test_job",
-      "command": "test_job",
-      "schedule_type": "interval",
-      "executed_at": 1789893508.6693506,
-      "status": "success",
-      "response": "[Ollama service unavailable at http://localhost:11434. Ensure Ollama daemon is running.]",
-      "execution_time_ms": 11223.37,
-      "tts_notified": false
-    },
     {
       "task_id": "test_job",
       "command": "test_job",
@@ -1091,6 +1061,36 @@
       "status": "success",
       "response": "Telemetry Snapshot: CPU is at <MagicMock name='mock.cpu_percent()' id='1772296680992'>%, RAM is at <MagicMock name='mock.virtual_memory().percent' id='1772315479408'>% (<MagicMock name='mock.virtual_memory().total.__truediv__().__round__()' id='1772315486128'> GB total), Core Temp is ~<MagicMock nam",
       "execution_time_ms": 5171.61,
+      "tts_notified": false
+    },
+    {
+      "task_id": "e2e_sched_test",
+      "command": "Summarize my metrics.",
+      "schedule_type": "interval",
+      "executed_at": 1792249961.008274,
+      "status": "success",
+      "response": "Telemetry Snapshot: CPU is at <MagicMock name='mock.cpu_percent()' id='2499650300832'>%, RAM is at <MagicMock name='mock.virtual_memory().percent' id='2499650291760'>% (<MagicMock name='mock.virtual_memory().total.__truediv__().__round__()' id='2499650296464'> GB total), Core Temp is ~<MagicMock nam",
+      "execution_time_ms": 5144.89,
+      "tts_notified": false
+    },
+    {
+      "task_id": "e2e_sched_test",
+      "command": "Summarize my metrics.",
+      "schedule_type": "interval",
+      "executed_at": 1792255475.9828472,
+      "status": "success",
+      "response": "Telemetry Snapshot: CPU is at <MagicMock name='mock.cpu_percent()' id='2133365764320'>%, RAM is at <MagicMock name='mock.virtual_memory().percent' id='2133365763648'>% (<MagicMock name='mock.virtual_memory().total.__truediv__().__round__()' id='2133365766672'> GB total), Core Temp is ~<MagicMock nam",
+      "execution_time_ms": 4856.55,
+      "tts_notified": false
+    },
+    {
+      "task_id": "e2e_sched_test",
+      "command": "Summarize my metrics.",
+      "schedule_type": "interval",
+      "executed_at": 1792258154.8298097,
+      "status": "success",
+      "response": "Telemetry Snapshot: CPU is at <MagicMock name='mock.cpu_percent()' id='2618746292944'>%, RAM is at <MagicMock name='mock.virtual_memory().percent' id='2618746290592'>% (<MagicMock name='mock.virtual_memory().total.__truediv__().__round__()' id='2618746294624'> GB total), Core Temp is ~<MagicMock nam",
+      "execution_time_ms": 1958.4,
       "tts_notified": false
     }
   ]

@@ -54,6 +54,17 @@ class IntentRouter(BaseIntentRouter):
             (r"\b(?:review (?:this )?code|audit (?:this )?code)\b", "coding", "review_code", {}, 0.95),
 
             # 4. General Planning & Objectives
+            (r"\b(?:show|view|get)\s+(?:the\s+)?critical\s+path(?:\s+for\s+(?:plan\s+)?(\S+))?\b", "plan", "get_critical_path", lambda m: {"plan_id": m.group(1).strip().strip(".?\"'")} if m.group(1) else {}, 0.99),
+            (r"\b(?:show|view|get|list)\s+(?:all\s+)?(?:my\s+)?plans\b", "plan", "list_plans", {}, 0.98),
+            (r"\b(?:view\s+plan|show\s+plan|plan\s+details\s+for)(?:\s+)(lhplan_[a-zA-Z0-9_\-]+|\S+)\b", "plan", "view_plan", lambda m: {"plan_id": m.group(1).strip().strip(".?\"'")}, 0.99),
+            (r"\b(?:approve\s+plan\s+|approve\s+)(lhplan_[a-zA-Z0-9_\-]+)\b", "plan", "approve_plan", lambda m: {"plan_id": m.group(1).strip().strip(".?\"'")}, 0.99),
+            (r"\b(?:reject\s+plan\s+|reject\s+)(lhplan_[a-zA-Z0-9_\-]+)\b", "plan", "reject_plan", lambda m: {"plan_id": m.group(1).strip().strip(".?\"'")}, 0.99),
+            (r"\b(?:activate\s+plan\s+|activate\s+)(lhplan_[a-zA-Z0-9_\-]+)\b", "plan", "activate_plan", lambda m: {"plan_id": m.group(1).strip().strip(".?\"'")}, 0.99),
+            (r"\b(?:submit\s+plan\s+|submit\s+)(lhplan_[a-zA-Z0-9_\-]+)(?:\s+for\s+approval)?\b", "plan", "submit_plan_for_approval", lambda m: {"plan_id": m.group(1).strip().strip(".?\"'")}, 0.99),
+            (r"\b(?:propose\s+(?:a\s+)?revised\s+(?:project\s+)?plan|propose\s+revision\s+for)(?:\s+)(lhplan_[a-zA-Z0-9_\-]+|\S+)\b", "plan", "propose_revision", lambda m: {"plan_id": m.group(1).strip().strip(".?\"'")}, 0.99),
+            (r"\b(?:approve\s+revision\s+for\s+|approve\s+plan\s+revision\s+)(lhplan_[a-zA-Z0-9_\-]+)\b", "plan", "approve_revision", lambda m: {"plan_id": m.group(1).strip().strip(".?\"'")}, 0.99),
+            (r"\b(?:reject\s+revision\s+for\s+|reject\s+plan\s+revision\s+)(lhplan_[a-zA-Z0-9_\-]+)\b", "plan", "reject_revision", lambda m: {"plan_id": m.group(1).strip().strip(".?\"'")}, 0.99),
+            (r"\b(?:create|synthesize|formulate)\s+(?:a\s+)?(?:long[ -]horizon\s+|strategic\s+)?plan\s+for\s+(?:goal\s+)?(.+)$", "plan", "synthesize_plan", lambda m: {"title": m.group(1).strip().rstrip(".")}, 0.97),
             (r"^(?:create (?:a )?plan (?:to|for)|plan) (.+)$", "plan", "create_plan", lambda m: {"task": m.group(1).strip()}, 0.95),
             (r"\b(?:explain (?:the )?plan|breakdown plan)\b", "plan", "explain_plan", lambda m: {"task": "active_plan"}, 0.92),
 

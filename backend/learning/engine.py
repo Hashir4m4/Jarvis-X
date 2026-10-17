@@ -219,3 +219,33 @@ class LearningEngine:
             "last_learning_cycle": self.last_learning_cycle,
             "last_error": self.last_error
         }
+
+    def generate_improvement_recommendations(self) -> List["ImprovementRecommendation"]:
+        """
+        Synthesizes actionable system improvement recommendations from validated learning records.
+        Guarantees that recommendations require human approval before changing system commitments.
+        """
+        from .models import ImprovementRecommendation, ImprovementCategory
+        recommendations = []
+        for record in self.active_records:
+            if record.status == LearningStatus.VALIDATED:
+                cat = ImprovementCategory.WORKFLOW_RELIABILITY
+                if "user_prefers" in record.pattern or "feedback" in record.pattern:
+                    cat = ImprovementCategory.USER_EXPERIENCE
+                elif "syntax" in record.pattern or "coding" in record.pattern:
+                    cat = ImprovementCategory.CODE_QUALITY
+                elif "planning" in record.pattern:
+                    cat = ImprovementCategory.PLANNING_ACCURACY
+
+                rec = ImprovementRecommendation(
+                    category=cat,
+                    title=f"Improvement based on observed pattern: {record.pattern}",
+                    description=f"Automated pattern observed across {record.evidence_count} verified outcomes.",
+                    expected_benefit="Enhances autonomous reliability and reduces error frequency.",
+                    risk_level="LOW",
+                    confidence=record.confidence,
+                    evidence=list(record.provenance),
+                    requires_approval=True,
+                )
+                recommendations.append(rec)
+        return recommendations
